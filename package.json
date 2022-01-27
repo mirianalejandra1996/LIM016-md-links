@@ -1,4 +1,22 @@
 {
-  "name": "md-links",
-  "version": "0.1.0"
+  "name": "md-links-by-lu",
+  "version": "0.1.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/lucerogoga/LIM016-md-links"
+  },
+  "license": "MIT",
+  "main": "./api.js",
+  "bin": {
+    "md-Links": "./cli.js"
+  },
+  "scripts": {
+    "dev": "nodemon --exec babel-node index.js "
+  },
+  "devDependencies": {
+    "@babel/core": "^7.16.12",
+    "@babel/node": "^7.16.8",
+    "@babel/preset-env": "^7.16.11",
+    "nodemon": "^2.0.15"
+  }
 }
