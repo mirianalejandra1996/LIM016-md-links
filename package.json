@@ -35,5 +35,9 @@
     "@babel/node": "^7.16.8",
     "@babel/preset-env": "^7.16.11",
     "eslint": "^8.7.0"
-  }
+  },
+  "dependencies": {
+    "nodemon": "^2.0.15"
+  },
+  "type": "module"
 }
