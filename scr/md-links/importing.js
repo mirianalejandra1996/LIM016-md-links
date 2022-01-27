@@ -1,5 +1,12 @@
-import {sumar, restar} from "./functions.js";
+import {readFile, printListFiles} from "./functions.js";
 
-console.log(sumar(5, 10));
+// const file = 'C:\\Users\\Miria\\Desktop\\MD-LINKS\\LIM016-md-links\\scr\\Archivos\\filemd2.md'
+const file2 = 'filemd2.md'
+const directory = 'C:\\Users\\Miria\\Desktop\\MD-LINKS\\LIM016-md-links\\scr\\Archivos';
+const extension = '.md'; 
 
-console.log(restar(3, 2));
+
+// readFile(file)
+readFile(file2)
+
+printListFiles(directory,extension)
