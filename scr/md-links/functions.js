@@ -4,27 +4,24 @@ const fs = require('fs');
 const path = require('path')
 
 
-const file = '../Archivos/filejs.js'
-const file2 = '../Archivos/filetext.txt'
-console.log(__dirname)
+// const file = 'C:\\Users\\Miria\\Desktop\\MD-LINKS\\LIM016-md-links\\scr\\Archivos\\functions.js'
+const file = 'C:\\Users\\Miria\\Desktop\\MD-LINKS\\LIM016-md-links\\scr\\Archivos\\filemd2.md'
+// console.log(__dirname)
 
 const readFile = (file) => {
 
     fs.readFile( file, (err,content) => {
-        if (err) return console.log(err)
+        if (err) return console.log('eeeeeeeeeee' , err)
         
-        const lines = content.toString();v
-        console.log(lines)
+        const lines = content.toString();
+        console.log('ooooooh', lines)
     });
 
 }
 
 readFile(file)
-readFile(file2)
 
-// const directory = 'C:\\Users\\Miria\\Desktop\\tate-node\\prueba-md-links\\Modulo-1\\Prueba\\md-links'
-const directory = 'C:\\Users\\Miria\\Desktop\\tate-node\\prueba-md-links\\Modulo-1\\Prueba\\Archivos'
-// const directory = 'C:\\Users\\Miria\\Desktop\\tate-node\\prueba-md-links\\Modulo-1'
+const directory = 'C:\\Users\\Miria\\Desktop\\MD-LINKS\\LIM016-md-links\\scr\\Archivos';
 
 const extension = '.md'; 
 
@@ -44,9 +41,9 @@ const printListFiles = (directory) => {
 printListFiles(directory)
 
 
-module.exports = {
+// module.exports = {
     
-}
+// }
 
 // const extension = `.${process.argv[3]}`; // ".md" 
 // const extension = '.html'; 
