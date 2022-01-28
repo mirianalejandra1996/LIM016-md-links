@@ -1,22 +1,32 @@
 {
   "name": "md-links-by-lu",
+  "description": "libreria para validar links",
   "version": "0.1.0",
+  "author": {
+    "name": "Lucero Gonzales Gandolfo",
+    "email": "lucerogoga63@hotmail.com",
+    "url": "https://github.com/lucerogoga"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/lucerogoga/LIM016-md-links"
   },
+  "keywords": [
+    "mdlinks",
+    "nodejs",
+    "filesistem",
+    "path"
+  ],
   "license": "MIT",
   "main": "./api.js",
   "bin": {
     "md-Links": "./cli.js"
   },
   "scripts": {
-    "dev": "nodemon --exec babel-node index.js "
+    "dev": "nodemon --exec node index.js ",
+    "test": "jest --coverage"
   },
   "devDependencies": {
-    "@babel/core": "^7.16.12",
-    "@babel/node": "^7.16.8",
-    "@babel/preset-env": "^7.16.11",
     "nodemon": "^2.0.15"
   }
 }
