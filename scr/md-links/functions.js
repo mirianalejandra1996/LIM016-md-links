@@ -2,42 +2,67 @@
 
 import fs from 'fs';
 import path from 'path'
+import os from 'os';
 
+// Verifica si la ruta existe
+export const isValidatedPath = (directory) => fs.existsSync(directory)
 
-const file = 'C:\\Users\\Miria\\Desktop\\MD-LINKS\\LIM016-md-links\\scr\\Archivos\\filemd2.md'
-// const file = 'filemd2.md'
-
-export const __dirname = path.dirname(file)
-
-export const readFile = (file) => {
-
-    fs.readFile( file, (err,content) => {
-        if (err) return console.log('eeeeeeeeeee' , err)
-        
-        const lines = content.toString();
-        console.log(lines)
-    });
-
-}
-
-// readFile(file)
-
-// const directory = 'C:\\Users\\Miria\\Desktop\\MD-LINKS\\LIM016-md-links\\scr\\Archivos';
-
-
+// Imprime lista de todos los archivos de una extesión específica (".md")
+// Accede al contenido del directorio
 export const printListFiles = (directory, extension) => {
     fs.readdir(directory, (err,list) => {
         if (err) return console.log(err)
         list.forEach( file => {
-            if (path.extname(file) === extension) {
-                console.log(file)
-            }
+            extNameFile(file,extension)
         })
     });
 }
 
+// Identifica el tipo de archivo (nombre de la extensión)
+const extNameFile = (file,extension) => {
+    if (path.extname(file) === extension) {
+        console.log(file)
+    }
+}
+// Lee el contenido de un archivo específico
+export const readContentFile = (file) => {
 
-// const extension = `.${process.argv[3]}`; // ".md" 
-// const directory = process.argv[2]
-// const directory = process.argv
-// const directory = 'C:\\Users\\Miria\\Desktop\\tate-node\\prueba-md-links\\Modulo-1\\Prueba\\functions\\mdLinks.js'
+    fs.readFile( file, (err,content) => {
+        if (err) return console.log('Error en la consola, ' , err)
+        
+        const lines = content.toString();
+        console.log(lines)
+    });
+}
+
+// Obtenemos el archivo según la extensión ingresada (".md");
+export const getDirName = (file) => path.dirname(file)
+
+// Verificamos si la ruta es absoluta
+export const isPathAbsolute = (url) => path.isAbsolute(url)
+
+
+
+
+
+
+// console.log(process.argv)
+
+// const pathAbsolute = path.resolve('../src/tmp');
+// const pathAbsolute = path.resolve('importing.js');
+// const pathAbsolute = path.resolve('README.md');
+// console.log(pathAbsolute)
+
+// console.log(__dirname)
+
+
+import { dirname } from 'path';
+import { fileURLToPath } from 'url';
+
+// const __dirname = dirname(fileURLToPath(import.meta.url));
+// const __dirname = dirname(process.argv[1]);
+
+// console.log(__filename)
+// console.log(__dirname)
+// console.log(os.tmpdir())
+
