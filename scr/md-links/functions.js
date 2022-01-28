@@ -41,6 +41,23 @@ export const getDirName = (file) => path.dirname(file)
 // Verificamos si la ruta es absoluta
 export const isPathAbsolute = (url) => path.isAbsolute(url)
 
+const file = 'C:\\Users\\Miria\\Desktop\\MD-LINKS\\LIM016-md-links\\scr\\Archivos\\filemd2.md'
+
+// Getting information for a file
+// const statsObj = fs.statSync(file);
+// console.log(statsObj)
+
+// fs.lstatSync() method to get the details of a symbolic link to a file.
+const statsObj = fs.lstatSync(file);
+// console.log(statsObj)
+
+export const pathIsDirectory = (statsObj) => statsObj.isDirectory();
+
+export const pathIsFile = (statsObj) => statsObj.isFile();
+
+console.log(pathIsDirectory(statsObj))
+console.log(pathIsFile(statsObj))
+
 
 
 
@@ -50,8 +67,12 @@ export const isPathAbsolute = (url) => path.isAbsolute(url)
 
 // const pathAbsolute = path.resolve('../src/tmp');
 // const pathAbsolute = path.resolve('importing.js');
+// require('path').resolve('/etc', 'joe.txt')
+// const pathAbsolute = path.resolve(process.argv[1], 'README.md');
+const pathAbsolute = path.resolve(process.cwd(), 'README.md');
 // const pathAbsolute = path.resolve('README.md');
-// console.log(pathAbsolute)
+// const pathAbsolute = path.resolve('README.md');
+console.log(pathAbsolute)
 
 // console.log(__dirname)
 
@@ -59,10 +80,14 @@ export const isPathAbsolute = (url) => path.isAbsolute(url)
 import { dirname } from 'path';
 import { fileURLToPath } from 'url';
 
-// const __dirname = dirname(fileURLToPath(import.meta.url));
-// const __dirname = dirname(process.argv[1]);
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
-// console.log(__filename)
-// console.log(__dirname)
-// console.log(os.tmpdir())
+console.log('el filenamee', __filename)
+console.log('el dirnameee', __dirname)
+
+console.log('aaaaaaaaaa', process.cwd())
+console.log('eeeeeeeeee', fs.realpathSync('.'))
+console.log('iiiiiiii', process.env.PWD)
+console.log('oooooooooo', process.argv[1]);
 
