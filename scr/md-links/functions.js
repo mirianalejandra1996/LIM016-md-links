@@ -3,7 +3,7 @@
 import fs from 'fs';
 import path from 'path';
 import http from 'http';
-import https from 'https';
+// import https from 'https';
 
 // Verifica si la ruta existe
 export const isValidatedPath = (directory) => fs.existsSync(directory)
@@ -108,17 +108,10 @@ export const readLinks = (fileContent) => {
 
 const propertiesLink = (link) => {
 
-    if (link.includes('https')){
         const request = http.get(link , (response) => {
             // response.pipe(file);
             console.log(response.statusCode)
         });
-    } else {
-        const request = https.get(link , (response) => {
-            // response.pipe(file);
-            console.log(response.statusCode)
-        });
-    }
 }
 
 // const link = "http://i3.ytimg.com/vi/J---aiyznGQ/mqdefault.jpg"
@@ -126,5 +119,3 @@ const propertiesLink = (link) => {
 // const link = "http://google.com"
 // const link = "http://googuule.com"
 // console.log(propertiesLink(link))
-// console.log(propertiesLink(link))
-// console.log('prueba, ', link.includes('https'))
