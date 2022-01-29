@@ -1,8 +1,9 @@
 'use strict'
 
 import fs from 'fs';
-import path from 'path'
-import os from 'os';
+import path from 'path';
+import http from 'http';
+import https from 'https';
 
 // Verifica si la ruta existe
 export const isValidatedPath = (directory) => fs.existsSync(directory)
@@ -31,7 +32,8 @@ export const readContentFile = (file) => {
         if (err) return console.log('Error en la consola, ' , err)
         
         const lines = content.toString();
-        console.log(lines)
+        // console.log(lines)
+        readLinks(lines)
     });
 }
 
@@ -48,36 +50,17 @@ const file = 'C:\\Users\\Miria\\Desktop\\MD-LINKS\\LIM016-md-links\\scr\\Archivo
 // console.log(statsObj)
 
 // fs.lstatSync() method to get the details of a symbolic link to a file.
-
-// console.log(statsObj)
-
-export const pathIsDirectory = (file) => {
-    const statsObj = fs.lstatSync(file);
+export const pathIsDirectory = (route) => {
+    const statsObj = fs.lstatSync(route);
     return statsObj.isDirectory();
 }
 
-export const pathIsFile = (statsObj) => statsObj.isFile();
-
-// console.log(pathIsDirectory(statsObj))
-// console.log(pathIsFile(statsObj))
+export const pathIsFile = (route) => route.isFile();
 
 
-
-
-
-
-// console.log(process.argv)
-
-// const pathAbsolute = path.resolve('../src/tmp');
-// const pathAbsolute = path.resolve('importing.js');
-// require('path').resolve('/etc', 'joe.txt')
-// const pathAbsolute = path.resolve(process.argv[1], 'README.md');
-export const pathAbsolute = (pathUrl) =>  path.resolve(process.cwd(), pathUrl);
-// const pathAbsolute = path.resolve('README.md');
-// const pathAbsolute = path.resolve('README.md');
-// console.log('esta es la nueva ruta, ', pathAbsolute('README.md'))
-
-// console.log(__dirname)
+// Si la ruta es relativa se convierte en absoluta 
+// ! preguntar por qué estas rutas son como falsas...
+export const convertPathAbsolute = (ruta) => !isPathAbsolute(ruta) ? path.resolve(ruta) : ruta
 
 
 import { dirname } from 'path';
@@ -96,3 +79,52 @@ const __dirname = dirname(__filename);
 // console.log('uuuuuuuuuu', path.join());
 // console.log('qqqqqqqqqq', path.resolve());
 
+
+export const readLinks = (fileContent) => {
+    const regexMdLinks = /\[([^\[]+)\](\(.*\))/gm
+    const matches = fileContent.match(regexMdLinks);
+    // console.log('links', matches)
+
+    const singleMatch = /\[([^\[]+)\]\((.*)\)/
+    const links = []
+    for (var i = 0; i < matches.length; i++) {
+        var text = singleMatch.exec(matches[i])
+        // console.log(`Match #${i+1}:`, text)
+        // console.log(`Text  #${i+1}: ${text[1]}`)
+        // console.log(`Href  #${i+1}: ${text[2]}`)
+        // console.log(`File  #${i+1}: ${}`)
+        // propertiesLink(text[2])
+
+        links.push({
+            text : text[1],
+            href : text[2],
+        })
+    }
+
+    console.log('liiiiiiiiiinks, ', links)
+    return links
+}
+
+
+const propertiesLink = (link) => {
+
+    if (link.includes('https')){
+        const request = http.get(link , (response) => {
+            // response.pipe(file);
+            console.log(response.statusCode)
+        });
+    } else {
+        const request = https.get(link , (response) => {
+            // response.pipe(file);
+            console.log(response.statusCode)
+        });
+    }
+}
+
+// const link = "http://i3.ytimg.com/vi/J---aiyznGQ/mqdefault.jpg"
+// const link = "https://google.com"
+// const link = "http://google.com"
+// const link = "http://googuule.com"
+// console.log(propertiesLink(link))
+// console.log(propertiesLink(link))
+// console.log('prueba, ', link.includes('https'))

@@ -1,5 +1,5 @@
 import {readContentFile, printListFiles, isValidatedPath, getDirName, isPathAbsolute,
-    pathIsDirectory, pathAbsolute} from "./functions.js";
+    pathIsDirectory, convertPathAbsolute, readLinks} from "./functions.js";
 
 // const file = 'C:\\Users\\Miria\\Desktop\\MD-LINKS\\LIM016-md-links\\scr\\Archivos\\filemd2.md'
 const file2 = 'filemd2.md'
@@ -16,11 +16,12 @@ readContentFile(file)
 
 console.log('directorio nombre, ', getDirName(file))
 
-console.log('nueva ruta absoluta prueba, ', pathAbsolute('filemd2.md'));
-console.log(isValidatedPath(pathAbsolute('functions.js')))
+console.log('nueva ruta absoluta prueba, ', convertPathAbsolute('filemd2.md'));
+console.log(isValidatedPath(convertPathAbsolute('functions.js')))
 
 console.log('¿es absoluta la ruta? => ', isPathAbsolute(file2))
 console.log('¿es absoluta la ruta? => ', isPathAbsolute(file))
 
 console.log('¿es directorio la ruta? => ', pathIsDirectory(file))
+
 
