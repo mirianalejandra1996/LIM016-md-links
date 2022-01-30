@@ -1,4 +1,4 @@
-import {readContentFile, printListFiles, isValidatedPath, getDirName, isPathAbsolute,
+import {linksFromFile, printListFiles, isValidatedPath, getDirName, isPathAbsolute,
     pathIsDirectory, convertPathAbsolute, readLinks} from "./functions.js";
 
 // const file = 'C:\\Users\\Miria\\Desktop\\MD-LINKS\\LIM016-md-links\\scr\\Archivos\\filemd2.md'
@@ -12,7 +12,7 @@ console.log(isValidatedPath(directory))
 
 printListFiles(directory,extension)
 
-readContentFile(file)
+linksFromFile(file).then(res => console.log(res))
 
 console.log('directorio nombre, ', getDirName(file))
 

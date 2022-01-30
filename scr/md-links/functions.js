@@ -1,9 +1,8 @@
 'use strict'
 
 import fs from 'fs';
-import path from 'path';
-import http from 'http';
-// import https from 'https';
+import path, { resolve } from 'path';
+import fetch from 'node-fetch'
 
 // Verifica si la ruta existe
 export const isValidatedPath = (directory) => fs.existsSync(directory)
@@ -25,16 +24,19 @@ const extNameFile = (file,extension) => {
         console.log(file)
     }
 }
-// Lee el contenido de un archivo específico
-export const readContentFile = (file) => {
+// fs.readFile : Lee el contenido de un archivo específico
+// linksfromFile extrae en un array los links de un archivo
+export const linksFromFile = (file) => {
 
-    fs.readFile( file, (err,content) => {
-        if (err) return console.log('Error en la consola, ' , err)
-        
-        const lines = content.toString();
-        // console.log(lines)
-        readLinks(lines)
-    });
+    return new Promise ((resolve, reject) => {
+        fs.readFile( file, (err,content) => {
+            if (err) reject('Problemas en lectura de archivo, ' , err)
+            
+            const lines = content.toString();
+            const links = readLinks(lines, file)
+            resolve(links)
+        });
+    })
 }
 
 // Obtenemos el archivo según la extensión ingresada (".md");
@@ -65,6 +67,7 @@ export const convertPathAbsolute = (ruta) => !isPathAbsolute(ruta) ? path.resolv
 
 import { dirname } from 'path';
 import { fileURLToPath } from 'url';
+import { rejects } from 'assert';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -80,42 +83,104 @@ const __dirname = dirname(__filename);
 // console.log('qqqqqqqqqq', path.resolve());
 
 
-export const readLinks = (fileContent) => {
+export const readLinks = (fileContent, filePath) => {
     const regexMdLinks = /\[([^\[]+)\](\(.*\))/gm
     const matches = fileContent.match(regexMdLinks);
-    // console.log('links', matches)
 
     const singleMatch = /\[([^\[]+)\]\((.*)\)/
     const links = []
     for (var i = 0; i < matches.length; i++) {
         var text = singleMatch.exec(matches[i])
-        // console.log(`Match #${i+1}:`, text)
-        // console.log(`Text  #${i+1}: ${text[1]}`)
-        // console.log(`Href  #${i+1}: ${text[2]}`)
-        // console.log(`File  #${i+1}: ${}`)
-        // propertiesLink(text[2])
 
         links.push({
             text : text[1],
             href : text[2],
+            file : filePath,
         })
     }
 
-    console.log('liiiiiiiiiinks, ', links)
+    // validatedLinks(links, true)
     return links
 }
 
+let arraysitos = [
+    {
+      text: 'Process - Documentación oficial (en inglés)',
+      href: 'https://nodejs.org/api/process.html',
+      file: 'C:\\Users\\Miria\\Desktop\\MD-LINKS\\LIM016-md-links\\scr\\Archivos\\filemd2.md'
+    },
+    {
+      text: 'first',
+      href: 'https://facebook.com',
+      file: 'C:\\Users\\Miria\\Desktop\\MD-LINKS\\LIM016-md-links\\scr\\Archivos\\filemd2.md'
+    },
+    {
+      text: 'secondLink',
+      href: 'http://www.tedeopikachusd.com',
+    //   href: 'www.google.com',
+    //   href: 'https://google.com',
+      file: 'C:\\Users\\Miria\\Desktop\\MD-LINKS\\LIM016-md-links\\scr\\Archivos\\filemd2.md'
+    },
+    {
+      text: 'fourth link',
+      href: 'www.gifuaosiufsd.com',
+      file: 'C:\\Users\\Miria\\Desktop\\MD-LINKS\\LIM016-md-links\\scr\\Archivos\\filemd2.md'
+    }
+  ]
 
-const propertiesLink = (link) => {
+const validatedLinks = (links ,  validate ) => {
 
-        const request = http.get(link , (response) => {
-            // response.pipe(file);
-            console.log(response.statusCode)
-        });
+    return new Promise ((resolve, reject) => {
+
+        const newLinks = []
+
+        if(validate){
+
+            links.forEach(link => {
+
+                    fetch(link.href).
+                    then((response) => {
+                        console.log('in response then')
+                        // const message = response.status === 200 ? 'Ok' : 'Fail' 
+                        newLinks.push({
+                            ...link,
+                            statusCode: response.status,
+                            message : 'Ok'
+                        })
+
+                        console.log(newLinks)
+                        // resolve(newLinks)
+                    })
+                    .catch((err) => {
+                        newLinks.push({
+                            ...link,
+                            statusCode: 404,
+                            message : 'Fail'
+                        })
+                        // console.log(newLinks)
+                        // reject(newLinks)
+
+                    })
+            })
+
+            console.log('queeeeee', newLinks)
+            resolve(newLinks)
+        }
+        else {
+            // newLinks.push(link)
+            // console.log(newLinks)
+            // reject(newLinks)
+            // reject(links)
+            resolve(links)
+        }
+        
+    })
 }
 
-// const link = "http://i3.ytimg.com/vi/J---aiyznGQ/mqdefault.jpg"
-// const link = "https://google.com"
-// const link = "http://google.com"
-// const link = "http://googuule.com"
-// console.log(propertiesLink(link))
+
+        validatedLinks(arraysitos, true).then(res => {
+            console.log('oook, ', res)
+        }).catch(err => console.log(err))
+        // validatedLinks(arraysitos, false)
+
+// ! options.validate
