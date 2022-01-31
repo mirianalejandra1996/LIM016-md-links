@@ -1,7 +1,7 @@
 'use strict'
 
 import fs from 'fs';
-import path, { resolve } from 'path';
+import path from 'path';
 import fetch from 'node-fetch'
 
 // Verifica si la ruta existe
@@ -70,6 +70,7 @@ import { fileURLToPath } from 'url';
 import { rejects } from 'assert';
 
 const __filename = fileURLToPath(import.meta.url);
+// const __filename = fileURLToPath(process.cwd());
 const __dirname = dirname(__filename);
 
 // console.log('el filenamee', __filename)
@@ -99,7 +100,7 @@ export const readLinks = (fileContent, filePath) => {
         })
     }
 
-    // validatedLinks(links, true)
+    validatedLinks(links, true)
     return links
 }
 
@@ -116,9 +117,9 @@ let arraysitos = [
     },
     {
       text: 'secondLink',
-      href: 'http://www.tedeopikachusd.com',
+    //   href: 'http://www.tedeopikachusd.com',
     //   href: 'www.google.com',
-    //   href: 'https://google.com',
+      href: 'https://google.com',
       file: 'C:\\Users\\Miria\\Desktop\\MD-LINKS\\LIM016-md-links\\scr\\Archivos\\filemd2.md'
     },
     {
@@ -128,59 +129,55 @@ let arraysitos = [
     }
   ]
 
+
+const validatedLink = (link) => {
+    return new Promise ((resolve, reject) => {
+        fetch(link.href).
+        then((response) => {
+
+            link.statusCode = response.status,
+            link.message = 'Ok'
+            resolve(link)
+            
+        })
+        .catch((err) => {
+            
+            link.statusCode = 404,
+            link.message = 'Fail'
+            resolve(link)
+        })
+
+        if (!link) reject('No links found')
+    })
+}
+
+// validatedLink(arraysitos[0]).then(res => console.log('oook, ', res))
+// .catch(err => console.log(err))
+
+
 const validatedLinks = (links ,  validate ) => {
 
     return new Promise ((resolve, reject) => {
 
+        // es un array de promesas
         const newLinks = []
 
         if(validate){
-
-            links.forEach(link => {
-
-                    fetch(link.href).
-                    then((response) => {
-                        console.log('in response then')
-                        // const message = response.status === 200 ? 'Ok' : 'Fail' 
-                        newLinks.push({
-                            ...link,
-                            statusCode: response.status,
-                            message : 'Ok'
-                        })
-
-                        console.log(newLinks)
-                        // resolve(newLinks)
-                    })
-                    .catch((err) => {
-                        newLinks.push({
-                            ...link,
-                            statusCode: 404,
-                            message : 'Fail'
-                        })
-                        // console.log(newLinks)
-                        // reject(newLinks)
-
-                    })
-            })
-
-            console.log('queeeeee', newLinks)
-            resolve(newLinks)
+            links.forEach(link => newLinks.push(validatedLink(link)))
         }
         else {
-            // newLinks.push(link)
-            // console.log(newLinks)
-            // reject(newLinks)
-            // reject(links)
+            // Si validate es false, entonces retornarán los links como entraron a la función.
             resolve(links)
         }
+
+        return Promise.all(newLinks)
+        .then((res) => resolve(res))
+        .catch(err => err)
         
     })
 }
 
-
-        validatedLinks(arraysitos, true).then(res => {
-            console.log('oook, ', res)
-        }).catch(err => console.log(err))
-        // validatedLinks(arraysitos, false)
-
-// ! options.validate
+// validatedLinks(arraysitos, false).then(res => {
+validatedLinks(arraysitos, true).then(res => {
+    console.log('oook, ', res)
+}).catch(err => console.log(err))
