@@ -1,7 +1,7 @@
 'use strict'
 
 import fs from 'fs';
-import path from 'path';
+import path, { dirname } from 'path';
 import fetch from 'node-fetch'
 
 // Verifica si la ruta existe
@@ -9,22 +9,27 @@ export const isValidatedPath = (directory) => fs.existsSync(directory)
 
 // Imprime lista de todos los archivos de una extesión específica (".md")
 // Accede al contenido del directorio
-export const printListFiles = (directory, extension) => {
-    fs.readdir(directory, (err,list) => {
-        if (err) return console.log(err)
-        list.forEach( file => {
-            extNameFile(file,extension)
-        })
-    });
+export const printListFiles = (directory) => {
+    return new Promise ((resolve, reject) => {
+        fs.readdir(directory, (err,list) => {
+
+            if (err) return console.log(err)
+            const mdFiles = []
+            list.forEach( file => {
+                // path.extname Identifica el tipo de archivo (nombre de la extensión)
+                // Listamos los archivos con extensión ".md"
+                if (path.extname(file) === ".md") {
+                    mdFiles.push(file)
+                }
+            });
+
+            mdFiles.length > 0 ? resolve(mdFiles) : reject('No se encuentran archivos md')
+        }) 
+       
+    })
 }
 
-// Identifica el tipo de archivo (nombre de la extensión)
-const extNameFile = (file,extension) => {
-    if (path.extname(file) === extension) {
-        console.log(file)
-    }
-}
-// fs.readFile : Lee el contenido de un archivo específico
+// fs.readFile : Metodo Asincrono que se encarga de leer el contenido de un archivo específico
 // linksfromFile extrae en un array los links de un archivo
 export const linksFromFile = (file) => {
 
@@ -34,25 +39,27 @@ export const linksFromFile = (file) => {
             
             const lines = content.toString();
             const links = readLinks(lines, file)
+
+            if (links.length === 0) {
+                return reject('no link in this file')
+            }
+            console.log(links)
             resolve(links)
         });
     })
 }
 
-// Obtenemos el archivo según la extensión ingresada (".md");
+// 
 export const getDirName = (file) => path.dirname(file)
 
 // Verificamos si la ruta es absoluta
 export const isPathAbsolute = (url) => path.isAbsolute(url)
 
-const file = 'C:\\Users\\Miria\\Desktop\\MD-LINKS\\LIM016-md-links\\scr\\Archivos\\filemd2.md'
+// const file = 'C:\\Users\\Miria\\Desktop\\MD-LINKS\\LIM016-md-links\\scr\\Archivos\\filemd2.md'
 
-// Getting information for a file
-// const statsObj = fs.statSync(file);
-// console.log(statsObj)
-
-// fs.lstatSync() method to get the details of a symbolic link to a file.
 export const pathIsDirectory = (route) => {
+    // With lstatSync or lstat (Asyncronous method) I can  get the details (information)
+    // of a symbolic link to a file.
     const statsObj = fs.lstatSync(route);
     return statsObj.isDirectory();
 }
@@ -61,32 +68,33 @@ export const pathIsFile = (route) => route.isFile();
 
 
 // Si la ruta es relativa se convierte en absoluta 
-// ! preguntar por qué estas rutas son como falsas...
+// TODO: preguntar por qué estas rutas son como falsas...
 export const convertPathAbsolute = (ruta) => !isPathAbsolute(ruta) ? path.resolve(ruta) : ruta
 
 
-import { dirname } from 'path';
-import { fileURLToPath } from 'url';
-import { rejects } from 'assert';
-
-const __filename = fileURLToPath(import.meta.url);
-// const __filename = fileURLToPath(process.cwd());
+// const __filename = fileURLToPath(import.meta.url);
+const __filename = process.cwd();
+// const __filename = path.resolve('./');
 const __dirname = dirname(__filename);
 
 // console.log('el filenamee', __filename)
 // console.log('el dirnameee', __dirname)
 
+// console.log('yyyyyyyyyyyy', import.meta.url)
 // console.log('aaaaaaaaaa', process.cwd())
 // console.log('eeeeeeeeee', fs.realpathSync('.'))
 // console.log('iiiiiiii', process.env.PWD)
 // console.log('oooooooooo', process.argv[1]);
-// console.log('uuuuuuuuuu', path.join());
 // console.log('qqqqqqqqqq', path.resolve());
+// console.log('uuuuuuuuuu', path.join());
 
 
 export const readLinks = (fileContent, filePath) => {
     const regexMdLinks = /\[([^\[]+)\](\(.*\))/gm
+
     const matches = fileContent.match(regexMdLinks);
+    
+    if (!matches) return []
 
     const singleMatch = /\[([^\[]+)\]\((.*)\)/
     const links = []
@@ -100,7 +108,6 @@ export const readLinks = (fileContent, filePath) => {
         })
     }
 
-    validatedLinks(links, true)
     return links
 }
 
@@ -118,8 +125,9 @@ let arraysitos = [
     {
       text: 'secondLink',
     //   href: 'http://www.tedeopikachusd.com',
-    //   href: 'www.google.com',
-      href: 'https://google.com',
+      href: 'www.google.com',
+    //   href: 'http://google.com',
+    //   href: 'https://google.com',
       file: 'C:\\Users\\Miria\\Desktop\\MD-LINKS\\LIM016-md-links\\scr\\Archivos\\filemd2.md'
     },
     {
@@ -178,6 +186,6 @@ const validatedLinks = (links ,  validate ) => {
 }
 
 // validatedLinks(arraysitos, false).then(res => {
-validatedLinks(arraysitos, true).then(res => {
-    console.log('oook, ', res)
-}).catch(err => console.log(err))
+// validatedLinks(arraysitos, true).then(res => {
+//     console.log('oook, ', res)
+// }).catch(err => console.log(err))
