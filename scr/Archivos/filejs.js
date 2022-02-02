@@ -1,0 +1,1 @@
+console.log('Pues sí, imprimo en consola ya que soy un archivo js, "file.js"');
