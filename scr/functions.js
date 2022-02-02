@@ -126,7 +126,7 @@ const validatedLink = (link) => {
             link.statusCode = response.status,
             link.message = 'Ok'
             resolve(link)
-            
+            // dddd probando ando
         })
         .catch((err) => {
             
