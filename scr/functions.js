@@ -76,7 +76,7 @@ export const getDirName = (file) => path.dirname(file)
 
 // Verificamos si la ruta es absoluta
 export const isPathAbsolute = (url) => path.isAbsolute(url)
-console.log('nueva ruta absoluta prueba, ', isPathAbsolute('C:\Users\Miria\Desktop\MD-LINKS\LIM016-md-links\README.md'));
+console.log('nueva ruta absoluta prueba, ', isPathAbsolute('C:/Users/Miria/Desktop/MD-LINKS/LIM016-md-links/README.md'));
 
 // const file = 'C:\\Users\\Miria\\Desktop\\MD-LINKS\\LIM016-md-links\\scr\\Archivos\\filemd2.md'
 
@@ -93,13 +93,18 @@ export const pathIsFile = (route) => route.isFile();
 // TODO: preguntar por qué estas rutas son como falsas...
 export const convertPathAbsolute = (ruta) => !isPathAbsolute(ruta) ? path.resolve(ruta) : ruta
 
+const __filename = process.cwd();
+const convertiendoAbsoluta = (ruta) => path.resolve(__filename,ruta)
+console.log('convertiendoAbsoluta prueba absoluta, ', convertiendoAbsoluta('/Archivos/README.md'));
+console.log('convertiendoAbsoluta prueba relativa, ', convertiendoAbsoluta('Archivos/README.md'));
+console.log('convertiendoAbsoluta prueba, ', convertiendoAbsoluta('filemd2.md'));
+
 
 // const __filename = fileURLToPath(import.meta.url);
-const __filename = process.cwd();
 // const __filename = path.resolve('./');
 const __dirname = dirname(__filename);
 
-// console.log('el filenamee', __filename)
+console.log('el filenamee', __filename)
 // console.log('el dirnameee', __dirname)
 
 // console.log('yyyyyyyyyyyy', import.meta.url)
@@ -154,6 +159,21 @@ export const validatedLinks = (links ,  validate ) => {
         .catch(err => err)
         
     })
+} 
+
+
+
+const realPath = (ruta) => {
+    fs.realpath( ruta, (error, resolvedPath) => {
+        if (error) {
+          console.log(error);
+        }
+        else {
+          console.log("One directory up resolved"
+            + " path is: ", resolvedPath);
+        }
+    })
 }
 
-
+// realPath('README.md')
+// realPath('filemd2.md')   
