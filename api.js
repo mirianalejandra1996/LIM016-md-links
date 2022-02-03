@@ -1,5 +1,8 @@
 const fs = require("fs");
 const path = require("path");
+const MarkdownIt = require('markdown-it');
+md = new MarkdownIt();
+
 
 const rutaExiste = (route) => {
   return fs.existsSync(route);
@@ -30,40 +33,46 @@ const listArchivosMD = (route, cb) => {
     console.log(archivo);
     archivoMd = filtrarMd(archivo);
     if (archivoMd.length == 0) {
-        cb(new Error("no es un archivo MD"), null)
+      cb(new Error("no es un archivo MD"), null)
     } else {
-     cb(null, [route])
+      cb(null, [route])
     }
   } else {
     readDirectory(route)
-    .then(archivosMD => {  
+      .then(archivosMD => {
         if (archivosMD.length == 0)
-           cb(new Error("no hay archivos en este directorio"), null)
+          cb(new Error("no hay archivos en este directorio"), null)
         else cb(null, archivosMD)
-    })
-    .catch(err => {
+      })
+      .catch(err => {
         cb(err, null)
-    })
+      })
   }
 };
 
-const readDirPromise = (route) =>
-  new Promise((resolve, reject) => {
-    fs.readdir(route, (err, archivos) => {
-      if (err) {
-        reject(err);
-      } else {
-        resolve(archivos);
-      }
-    });
-  });
+//le el directorio sincronamente
+const readdirsync = (route) => {
+  return fs.readdirSync(route)
+}
 
+// lee el directorio asyncronamente
+// const readDirPromise = (route) =>
+//   new Promise((resolve, reject) => {
+//     fs.readdir(route, (err, archivos) => {
+//       if (err) {
+//         reject(err);
+//       } else {
+//         resolve(archivos);
+//       }
+//     });
+//   });
+
+
+//funcion asyncrona recursiva
 const readDirectory = async (route) => {
-  const items = await readDirPromise(route);
+  const items = readdirsync(route);
   const itemsConPath = items.map((archivoMd) => path.resolve(route, archivoMd));
-
   const archivosMD = filtrarMd(itemsConPath);
-
   const folders = itemsConPath.filter(isDirectory);
 
   if (folders.length > 0) {
@@ -77,19 +86,27 @@ const readDirectory = async (route) => {
   return archivosMD;
 };
 
-// Filtra archivos md
+// Filtra archivos que tenga extension .md
 const filtrarMd = (archivos) => {
   return archivos.filter((archivo) => {
     return path.extname(archivo) == ".md";
   });
 };
 
-// const readFile = fs.readFileSync(file,'utf-8')
+// Devuelve la data del los archivos MD
+const readFiles = (file) => {
+  return fs.readFileSync(file, 'utf-8')
+}
 
+const deveulveHtml = (data) =>{
+return md.render(data);
+}
 
 module.exports = {
   rutaExiste,
   rutaAbsoluta,
   convertirAbsoluta,
   listArchivosMD,
+  readFiles,
+  deveulveHtml
 };

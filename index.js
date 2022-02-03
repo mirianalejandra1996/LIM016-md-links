@@ -1,39 +1,35 @@
-const md = require("./api.js");
+const api = require("./api.js");
 
 let path = "Prueba";
 // let directorio = 'Prueba/directorio'
 // /Users/lucero/Projectos/LIM016-md-links/Prueba
 
 
-if (md.rutaExiste(path)) {
-  absolutePath = md.convertirAbsoluta(path);
-  console.log(absolutePath, "es una ruta absoluta");
-  md.listArchivosMD(path, (err, archivosMD)=> {
-      if(err) {
-          console.log(err)
-      } else {
-          console.log(archivosMD)
-      }
-  })
-//   respuesta = md.isFile(absolutePath);
-//  if (respuesta) {
-//     console.log("es archivo");
-    
-//   } else {
-//     console.log("es directorio");
-//     md.readDirec(absolutePath, (err, archivosMd) => {
-//       if (err) console.log('no tiene archivos');
-//       else if (archivosMd.length == 0) console.log("no hay archivos en este directorio")
-//       else console.log("tiene archivos", archivosMd);
-//     });
-//   } 
-} else {
-  console.log("la ruta no existe");
-}
+
+if (api.rutaExiste(path)) {
+    absolutePath = api.convertirAbsoluta(path);
+    console.log(absolutePath, "es una ruta absoluta");
+    api.listArchivosMD(path, (err, archivosMD)=> {
+        if(err) {
+            console.log(err)
+        } else {
+            console.log(archivosMD)
+            archivosMD.forEach(file => {     
+             data =  api.readFiles(file)
+             console.log("texto",data)
+             markDown = api.deveulveHtml(data)
+             console.log("html",markDown)
+            });
+            
+        }
+    })
+  } else {
+    console.log("la ruta no existe");
+  }
 
 // const mdlinks = () => {
 //     return new Promise ((res,rej) => {
-//         aqui va el codigo
+  
 //     })
 // };
 

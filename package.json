@@ -24,9 +24,13 @@
   },
   "scripts": {
     "dev": "nodemon --exec node index.js ",
+    "api": "nodemon --exec node api.js ",
     "test": "jest --coverage"
   },
   "devDependencies": {
     "nodemon": "^2.0.15"
+  },
+  "dependencies": {
+    "markdown-it": "^12.3.2"
   }
 }
