@@ -7,6 +7,7 @@ import fetch from 'node-fetch'
 // Verifica si la ruta existe
 export const isValidatedPath = (directory) => fs.existsSync(directory)
 
+
 // Imprime lista de todos los archivos de una extesión específica (".md")
 // Accede al contenido del directorio
 export const printMdFiles = (directory) => {
@@ -77,6 +78,7 @@ export const getDirName = (file) => path.dirname(file)
 // Verificamos si la ruta es absoluta
 export const isPathAbsolute = (url) => path.isAbsolute(url)
 console.log('nueva ruta absoluta prueba, ', isPathAbsolute('C:/Users/Miria/Desktop/MD-LINKS/LIM016-md-links/README.md'));
+console.log('nueva ruta absoluta prueba, ', isPathAbsolute('C:\\Users\\Miria\\Desktop\\MD-LINKS\\LIM016-md-links\\README.md'));
 
 // const file = 'C:\\Users\\Miria\\Desktop\\MD-LINKS\\LIM016-md-links\\scr\\Archivos\\filemd2.md'
 
@@ -91,13 +93,21 @@ export const pathIsFile = (route) => route.isFile();
 
 // Si la ruta es relativa se convierte en absoluta 
 // TODO: preguntar por qué estas rutas son como falsas...
-export const convertPathAbsolute = (ruta) => !isPathAbsolute(ruta) ? path.resolve(ruta) : ruta
+export const convertiendoAbsoluta = (ruta) => !isPathAbsolute(ruta) ? path.resolve(ruta) : ruta
+// export const convertPathAbsolute = (ruta) => !isPathAbsolute(ruta) ? path.resolve(ruta) : ruta
 
 const __filename = process.cwd();
-const convertiendoAbsoluta = (ruta) => path.resolve(__filename,ruta)
+// const convertiendoAbsoluta = (ruta) => path.resolve(ruta)
+// const convertiendoAbsoluta = (ruta) => path.resolve(ruta)
+// const convertiendoAbsoluta = (ruta) => path.resolve(__filename,ruta)
 console.log('convertiendoAbsoluta prueba absoluta, ', convertiendoAbsoluta('/Archivos/README.md'));
+console.log('VALIDANDO ', isValidatedPath(convertiendoAbsoluta('/Archivos/README.md')));
 console.log('convertiendoAbsoluta prueba relativa, ', convertiendoAbsoluta('Archivos/README.md'));
-console.log('convertiendoAbsoluta prueba, ', convertiendoAbsoluta('filemd2.md'));
+console.log('VALIDANDO prueba relativa, ', isValidatedPath(convertiendoAbsoluta('Archivos/README.md')));
+console.log('convertiendoAbsoluta prueba DARME TRUE, ', convertiendoAbsoluta('Archivos/filemd2.md'));
+console.log('VALIDANDO ', isValidatedPath(convertiendoAbsoluta('Archivos/filemd2.md')));
+console.log('convertiendoAbsoluta prueba DARME FALSE, ', convertiendoAbsoluta('/Archivos/filemd2.md'));
+console.log('VALIDANDO ', isValidatedPath(convertiendoAbsoluta('/Archivos/filemd2.md')));
 
 
 // const __filename = fileURLToPath(import.meta.url);
