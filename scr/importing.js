@@ -42,10 +42,10 @@ let arraysitos = [
 // extractedLinks(file).then(res => console.log(res)).catch(err => console.log(err))
 // extractedLinks(emptyFile).then(res => console.log(res)).catch(err => console.log(err))
 
-validatedLinks(arraysitos, false).then(res => {
-// validatedLinks(arraysitos, true).then(res => {
-    console.log(res)
-}).catch(err => console.log(err))
+// validatedLinks(arraysitos, false).then(res => {
+// // validatedLinks(arraysitos, true).then(res => {
+//     console.log(res)
+// }).catch(err => console.log(err))
 
 // TODO: consultar si la ruta debe ser normalizada (hay rutas con doble \\ y otras con /)
 // console.log(isValidatedPath('functions.js'))
@@ -53,15 +53,17 @@ validatedLinks(arraysitos, false).then(res => {
 console.log(isValidatedPath(convertPathAbsolute('README.md')))
 
 // console.log('nueva ruta absoluta prueba, ', convertPathAbsolute('functions.js'));
-console.log('nueva ruta absoluta prueba, ', convertPathAbsolute('filemd2.md'));
+// console.log('nueva ruta absoluta prueba, ', convertPathAbsolute('filemd2.md'));
 // ! Cuando debería ser => C:\Users\Miria\Desktop\MD-LINKS\LIM016-md-links\README.md
 // console.log('nueva ruta absoluta prueba mirian, ', convertPathAbsolute('README.md'));
 // ! Cuando debería ser la misma ingresada => C:\Users\Miria\Desktop\MD-LINKS\LIM016-md-links\README.md
 // console.log('nueva ruta absoluta prueba, ', convertPathAbsolute('C:\Users\Miria\Desktop\MD-LINKS\LIM016-md-links\README.md'));
 
-// console.log(convertPathAbsolute('functions.js'))
+console.log(convertPathAbsolute('functions.js'))
+console.log('deberia dar true ' , isValidatedPath(convertPathAbsolute('functions.js')))
 // console.log(convertPathAbsolute('README.md'))
-// console.log(isValidatedPath(convertPathAbsolute('functions.js')))
+console.log(convertPathAbsolute('fake/functions.js'))
+console.log('deberia dar false ' , isValidatedPath(convertPathAbsolute('fake/functions.js')))
 
 // console.log('directorio nombre, ', getDirName(file))
 

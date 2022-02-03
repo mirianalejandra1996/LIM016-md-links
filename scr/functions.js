@@ -1,7 +1,7 @@
 'use strict'
 
 import fs from 'fs';
-import path, { dirname } from 'path';
+import path, { dirname} from 'path';
 import fetch from 'node-fetch'
 
 // Verifica si la ruta existe
@@ -77,8 +77,6 @@ export const getDirName = (file) => path.dirname(file)
 
 // Verificamos si la ruta es absoluta
 export const isPathAbsolute = (url) => path.isAbsolute(url)
-console.log('nueva ruta absoluta prueba, ', isPathAbsolute('C:/Users/Miria/Desktop/MD-LINKS/LIM016-md-links/README.md'));
-console.log('nueva ruta absoluta prueba, ', isPathAbsolute('C:\\Users\\Miria\\Desktop\\MD-LINKS\\LIM016-md-links\\README.md'));
 
 // const file = 'C:\\Users\\Miria\\Desktop\\MD-LINKS\\LIM016-md-links\\scr\\Archivos\\filemd2.md'
 
@@ -91,41 +89,10 @@ export const pathIsDirectory = (route) => {
 
 export const pathIsFile = (route) => route.isFile();
 
-// Si la ruta es relativa se convierte en absoluta 
-// TODO: preguntar por qué estas rutas son como falsas...
-export const convertiendoAbsoluta = (ruta) => !isPathAbsolute(ruta) ? path.resolve(ruta) : ruta
-// export const convertPathAbsolute = (ruta) => !isPathAbsolute(ruta) ? path.resolve(ruta) : ruta
+export const convertPathAbsolute = (ruta) => !isPathAbsolute(ruta) ? path.resolve(ruta) : ruta
 
 const __filename = process.cwd();
-// const convertiendoAbsoluta = (ruta) => path.resolve(ruta)
-// const convertiendoAbsoluta = (ruta) => path.resolve(ruta)
-// const convertiendoAbsoluta = (ruta) => path.resolve(__filename,ruta)
-console.log('convertiendoAbsoluta prueba absoluta, ', convertiendoAbsoluta('/Archivos/README.md'));
-console.log('VALIDANDO ', isValidatedPath(convertiendoAbsoluta('/Archivos/README.md')));
-console.log('convertiendoAbsoluta prueba relativa, ', convertiendoAbsoluta('Archivos/README.md'));
-console.log('VALIDANDO prueba relativa, ', isValidatedPath(convertiendoAbsoluta('Archivos/README.md')));
-console.log('convertiendoAbsoluta prueba DARME TRUE, ', convertiendoAbsoluta('Archivos/filemd2.md'));
-console.log('VALIDANDO ', isValidatedPath(convertiendoAbsoluta('Archivos/filemd2.md')));
-console.log('convertiendoAbsoluta prueba DARME FALSE, ', convertiendoAbsoluta('/Archivos/filemd2.md'));
-console.log('VALIDANDO ', isValidatedPath(convertiendoAbsoluta('/Archivos/filemd2.md')));
-
-
-// const __filename = fileURLToPath(import.meta.url);
-// const __filename = path.resolve('./');
 const __dirname = dirname(__filename);
-
-console.log('el filenamee', __filename)
-// console.log('el dirnameee', __dirname)
-
-// console.log('yyyyyyyyyyyy', import.meta.url)
-// console.log('aaaaaaaaaa', process.cwd())
-// console.log('eeeeeeeeee', fs.realpathSync('.'))
-// console.log('iiiiiiii', process.env.PWD)
-// console.log('oooooooooo', process.argv[1]);
-// console.log('qqqqqqqqqq', path.resolve());
-// console.log('uuuuuuuuuu', path.join());
-
-
 
 
 const validatedLink = (link) => {
@@ -172,18 +139,41 @@ export const validatedLinks = (links ,  validate ) => {
 } 
 
 
+// const mdLinks = (path, options) => {
 
-const realPath = (ruta) => {
-    fs.realpath( ruta, (error, resolvedPath) => {
-        if (error) {
-          console.log(error);
-        }
-        else {
-          console.log("One directory up resolved"
-            + " path is: ", resolvedPath);
-        }
-    })
+// }
+
+const traverseSync = dir => {
+    console.log('ook', dir)
+    
+    let prueba = {
+            path: dir,
+            children: fs.readdirSync(dir).map(file => {
+              const newPath = path.join(dir, file);
+              return fs.lstatSync(newPath).isDirectory()
+                ? traverseSync(newPath)
+                : { newPath };
+            })
+          };
+
+    console.log('pppooooooo, ', prueba)
+    // return prueba
 }
+// (
+    
 
-// realPath('README.md')
-// realPath('filemd2.md')   
+// traverseSync(convertPathAbsolute('Archivos'));
+// console.log(traverseSync(convertPathAbsolute('Archivos')));
+console.log(traverseSync(convertPathAbsolute('')));
+// console.log(isValidatedPath(convertPathAbsolute('Archivos')));
+// console.log(convertPathAbsolute('Archivos'));
+// console.log(convertPathAbsolute(''));
+// console.log(traverseSync('Archivos'));
+// console.log(traverseSync(convertPathAbsolute('functions.js')));
+
+
+// console.log(convertPathAbsolute('functions.js'))
+// console.log('deberia dar true ' , isValidatedPath(convertPathAbsolute('functions.js')))
+// // console.log(convertPathAbsolute('README.md'))
+// console.log(convertPathAbsolute('fake/functions.js'))
+// console.log('deberia dar false ' , isValidatedPath(convertPathAbsolute('functions.js')))
