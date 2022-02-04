@@ -151,7 +151,8 @@ export const validatedLinks = (links, validate) => {
 
 const getMDFiles = (files) => {
   const mdFiles = files.filter((file) => path.extname(file) === ".md");
-  return mdFiles.length > 0 ? mdFiles : "No se encuentran filesArr md";
+  return mdFiles.length > 0 ? mdFiles : [];
+  //   return mdFiles.length > 0 ? mdFiles : "No se encuentran filesArr md";
 };
 
 // ! BUENO
@@ -194,39 +195,48 @@ const mdLinks = (path, options) => {
 
       const allFiles = getAllFilesRecursively(AbsolutePath);
 
-      const mdFiles = getMDFiles(allFiles);
-      const getlinks = mdFiles.map((file) =>
-        extractedLinks(file)
-          .then((res) => res)
-          .catch((err) => err)
-      );
+      if (allFiles.length === 0) {
+        reject("No existe ningún archivo en la ruta ingresada");
+      } else {
+        const mdFiles = getMDFiles(allFiles);
 
-      Promise.all(getlinks)
-        .then((links) => {
-          return links.flat().filter((link) => typeof link === "object");
-        })
-        .then((data) => {
-          return validatedLinks(data, options.validate);
-        })
-        .then((valLinks) => {
-          valLinks.length === 0
-            ? reject("No existen links en la ruta ingresada")
-            : resolve(valLinks);
-        })
-        .catch((err) => console.log(err));
+        if (mdFiles.length === 0) {
+          reject("No existen archivos MD en la ruta ingresada");
+        } else {
+          const getlinks = mdFiles.map((file) =>
+            extractedLinks(file)
+              .then((res) => res)
+              .catch((err) => err)
+          );
+
+          Promise.all(getlinks)
+            .then((links) => {
+              return links.flat().filter((link) => typeof link === "object");
+            })
+            .then((data) => {
+              return validatedLinks(data, options.validate);
+            })
+            .then((valLinks) => {
+              valLinks.length === 0
+                ? reject("No existen links en la ruta ingresada")
+                : resolve(valLinks);
+            })
+            .catch((err) => console.log(err));
+        }
+      }
     }
   });
 };
 
 // ! ------------
 
-// mdLinks('../test/Archivos', { validate: false })
-// mdLinks("../test/Archivos/emptyFolder", { validate: true })
-mdLinks("../test/Archivos", { validate: true })
+mdLinks("../test/Archivo23s")
+  // mdLinks('../test/Archivos', { validate: false })
+  // mdLinks("../test/Archivos/emptyFolder", { validate: true })
+  // mdLinks("../test/Archivos", { validate: true })
   // mdLinks('../test/rutaInexistente', { validate: true })
   .then((res) => console.log(res))
   .catch((err) => console.log(err));
-// mdLinks('../test/Archivo23s')
 
 // ! Recursivity
 // const traverseSync = dir => ({
