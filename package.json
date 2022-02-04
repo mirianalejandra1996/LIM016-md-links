@@ -9,7 +9,7 @@
   "scripts": {
     "dev": "node index.js",
     "demonio": "nodemon index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "cross-env NODE_OPTIONS=--experimental-vm-modules jest --coverage"
   },
   "repository": {
     "type": "git",
@@ -34,7 +34,9 @@
     "@babel/core": "^7.16.12",
     "@babel/node": "^7.16.8",
     "@babel/preset-env": "^7.16.11",
-    "eslint": "^8.7.0"
+    "cross-env": "^7.0.3",
+    "eslint": "^8.7.0",
+    "jest": "^27.4.7"
   },
   "dependencies": {
     "node-fetch": "^3.2.0",

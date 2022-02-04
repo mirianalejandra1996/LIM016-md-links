@@ -87,7 +87,11 @@ export const pathIsDirectory = (route) => {
     return statsObj.isDirectory();
 }
 
-export const pathIsFile = (route) => route.isFile();
+// export const pathIsFile = (route) => route.isFile();
+export const pathIsFile = (route) => {
+    const statsObj = fs.lstatSync(route);
+    return statsObj.isFile();
+}
 
 export const convertPathAbsolute = (ruta) => !isPathAbsolute(ruta) ? path.resolve(ruta) : ruta
 
@@ -139,41 +143,94 @@ export const validatedLinks = (links ,  validate ) => {
 } 
 
 
-// const mdLinks = (path, options) => {
 
-// }
 
-const traverseSync = dir => {
-    console.log('ook', dir)
-    
-    let prueba = {
-            path: dir,
-            children: fs.readdirSync(dir).map(file => {
-              const newPath = path.join(dir, file);
-              return fs.lstatSync(newPath).isDirectory()
-                ? traverseSync(newPath)
-                : { newPath };
-            })
-          };
-
-    console.log('pppooooooo, ', prueba)
-    // return prueba
+const getMDFiles = (files) => {
+    const mdFiles = files.filter( file => path.extname(file) === ".md" )
+    return mdFiles.length > 0 ? mdFiles : 'No se encuentran archivos md';
 }
-// (
+
+
+const getAllFilesRecursively = (ruta) => {
+    // console.log('mirame' , ruta)
+    let archivos = []
+    // Si la ruta es un archivo lo pushea en mi array
+    if (pathIsFile(ruta)) {
+        // return ruta
+        return [ruta]
+    }
     
+    else if (pathIsDirectory(ruta)) {
 
-// traverseSync(convertPathAbsolute('Archivos'));
-// console.log(traverseSync(convertPathAbsolute('Archivos')));
-console.log(traverseSync(convertPathAbsolute('')));
-// console.log(isValidatedPath(convertPathAbsolute('Archivos')));
-// console.log(convertPathAbsolute('Archivos'));
+      const files = fs.readdirSync(ruta);
+
+      if (files.length === 0){
+          return 'nothing'
+      } else {
+      
+      files.forEach(file => {
+  
+          const newPath = path.join(ruta, file);
+          let salva = getAllFilesRecursively(newPath)
+          archivos.push(salva)
+      })
+    
+      return archivos.flat()
+    //   return getMDFiles(archivos.flat())
+
+      }
+
+    }
+
+}
+
+
+// getAllFilesRecursively(convertPathAbsolute('../test/Archivos/filetext.txt'));
+// console.log(getAllFilesRecursively(convertPathAbsolute('../test/Archivos/filetext.txt')));
+// console.log(getMDFiles(getAllFilesRecursively(convertPathAbsolute('../test/Archivos/filetext.txt'))));
 // console.log(convertPathAbsolute(''));
-// console.log(traverseSync('Archivos'));
-// console.log(traverseSync(convertPathAbsolute('functions.js')));
+// console.log(convertPathAbsolute('../test/Archivos'));
+console.log(getAllFilesRecursively(convertPathAbsolute('../test/Archivos')));
+// console.log(getAllFilesRecursively(convertPathAbsolute('../test/Archivos/filemd2.md')));
+// console.log(getAllFilesRecursively(convertPathAbsolute('')));
 
+    
+// ! ------------
 
-// console.log(convertPathAbsolute('functions.js'))
-// console.log('deberia dar true ' , isValidatedPath(convertPathAbsolute('functions.js')))
-// // console.log(convertPathAbsolute('README.md'))
-// console.log(convertPathAbsolute('fake/functions.js'))
-// console.log('deberia dar false ' , isValidatedPath(convertPathAbsolute('functions.js')))
+const mdLinks = (path, options) => {
+
+    return new Promise ((resolve,reject) => {
+
+        if (!isValidatedPath(path)){
+            console.log('La ruta ingresada no existe')
+            // reject('La ruta ingresada no existe')
+        }
+        else {
+            let newPath = convertPathAbsolute(path)
+            console.log('mira mi nuevo path! , ', newPath)
+
+            const allFiles = getAllFilesRecursively(path)
+            console.log('all files, ', allFiles)
+
+            // if(pathIsFile(path))
+            // getAllFilesRecursively(path)
+        }
+    })
+}
+
+// ! ------------
+
+// ! Recursivity
+// const traverseSync = dir => ({
+//     path: dir,
+//     children: Fs.readdirSync(dir).map(file => {
+//       const path = Path.join(dir, file);
+//       return Fs.lstatSync(path).isDirectory()
+//         ? traverseSync(path)
+//         : { path };
+//     })
+//   });
+
+// convertPathAbsolute('../test/Archivos')
+mdLinks('../test/Archivos')
+// mdLinks('../test/Archfdsivos')
