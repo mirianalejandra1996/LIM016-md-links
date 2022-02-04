@@ -73,3 +73,37 @@ console.log('deberia dar false ' , isValidatedPath(convertPathAbsolute('fake/fun
 // console.log('¿es directorio la ruta? => ', pathIsDirectory(file))
 
 
+// ---------------------------------------------
+
+// console.log('probando si es carpeta' , convertPathAbsolute('../test/Archivos'))
+// console.log('probando si es carpeta' , pathIsDirectory(convertPathAbsolute('.Archivos')))
+// console.log('probando si es carpeta' , pathIsDirectory(convertPathAbsolute('../test/Archivos/filejs.js')))
+// console.log('probando si es carpeta' , pathIsDirectory(convertPathAbsolute('filejs.js')))
+
+// const __filename = process.cwd();
+// const __dirname = dirname(__filename);
+
+// console.log(getAllFilesRecursively(convertPathAbsolute('../test/Archivos')));
+// console.log(getAllFilesRecursively(convertPathAbsolute('../test/Archivos/filetext.txt')));
+
+// getAllFilesRecursively(convertPathAbsolute('../test/Archivos/filetext.txt'));
+// console.log(getMDFiles(getAllFilesRecursively(convertPathAbsolute('../test/Archivos/filetext.txt'))));
+// console.log(convertPathAbsolute(''));
+// console.log(convertPathAbsolute('../test/Archivos'));
+// console.log(getAllFilesRecursively(convertPathAbsolute('../test/Archivos/filemd2.md')));
+// console.log(getAllFilesRecursively(convertPathAbsolute('')));
+
+// ! otra manera de hallar los filesArr recursivamente.
+// const getAllFilesRecursively = route => {
+//     let filesArr = [];
+//     if(pathIsFile(route)){
+//       filesArr.push(route);
+//     } else {
+//       const readDirectory = fs.readdirSync(route);
+//       readDirectory.forEach(file => {
+//         const pathFile = path.join(route, file);
+//         filesArr = filesArr.concat(getAllFilesRecursively(pathFile))
+//       })
+//     }
+//     return filesArr;
+//   };
