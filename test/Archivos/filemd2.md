@@ -8,7 +8,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit..
 
 Lorem ipsum dolor sit amet, consectetur adipiscing elit..
 
-[secondLink](https://google.com)
+[secondLink](http://google.com)
 
 Lorem ipsum dolor sit amet, consectetur adipiscing elit..
 
