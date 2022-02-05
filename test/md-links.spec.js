@@ -1,7 +1,6 @@
-const mdLinks = require('../');
+// const mdLinks = require('../api.js');
 
-
-describe('mdLinks', () => {
+describe.skip('mdLinks', () => {
 
   it('should...', () => {
     console.log('FIX ME!');

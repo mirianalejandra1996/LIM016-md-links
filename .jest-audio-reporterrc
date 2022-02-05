@@ -1,0 +1,6 @@
+{
+  "onStart": "./audio-tests/starting.mp3",
+  "onStartThreshold": 1,
+  "onSuitePass": "./audio-tests/level-up.mp3",
+  "onSuiteFailure": "./audio-tests/failed.mp3"
+}
