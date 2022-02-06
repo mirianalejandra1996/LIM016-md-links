@@ -20,13 +20,13 @@
   "license": "MIT",
   "main": "./api.js",
   "bin": {
-    "md-lunks": "./cli.js"
+    "md-links": "./cli.js"
   },
   "scripts": {
     "dev": "nodemon --exec node src/index.js ",
     "api": "nodemon --exec node src/utils.js ",
     "test": "jest --coverage --watch",
-    "cli": "node --exec node src/cli.js"
+    "cli": "node src/cli.js"
   },
   "devDependencies": {
     "jest": "^27.4.7",

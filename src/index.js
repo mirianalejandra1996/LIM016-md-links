@@ -4,7 +4,7 @@ const api = require("./api.js");
 // let directorio = 'Prueba/directorio'
 // /Users/lucero/Projectos/LIM016-md-links/Prueba
 
-const mdlinks = (path) => {
+const mdlinks = (path,option) => {
     return new Promise ((res,rej) => {
       if (api.rutaExiste(path)) {
         if(option == undefined || option.validate == false){
