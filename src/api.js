@@ -127,22 +127,12 @@ const validatelinks = (links) => {
         // console.log(res.status)
         //   console.log(res.statusText)
         if (res.status == 200) {
-          //  console.log("objetos", linkStatus)
-          // console.log(
-          //   '───▄▀▀▀▄▄▄▄▄▄▄▀▀▀▄───',
-          //   '\n───█▒▒░░░░░░░░░▒▒█───',
-          //   '\n────█░░█░░░░░█░░█────',
-          //   '\n─▄▄──█░░░▀█▀░░░█──▄▄─',
-          //   '\n █░░█─▀▄░░░░░░░▄▀─█░░█'
-          // )
-          //  console.log('array destructurado',{...link, status:res.status, mensaje:'nice'+res.statusText})
           return {
             ...link,
             status: res.status,
             mensaje: 'nice' + res.statusText
           }
         } else {
-          //  console.log('array destructurado',{...link, status:res.status, mensaje:'fail'+res.statusText})
           return {
             ...link,
             status: res.status,
@@ -153,7 +143,6 @@ const validatelinks = (links) => {
       .catch(err => console.log(err));
 
   })
-  //console.log(linksValidados)
   return linksValidados
 }
 
@@ -171,17 +160,6 @@ const listLinks = (path) => {
     })
     return arrLinksObj
   })
-  // const data = readFiles(file)
-  // let markDown = dataToHtml(data)
-  // const links = getLinks(file, markDown)
-  // console.log(links)
-    // .then((archivosMD) => {
-    //   archivosMD.forEach(file => {
-    //     const data = readFiles(file)
-    //     let markDown = dataToHtml(data)
-    //     return getLinks(file, markDown)
-    //   })
-    // })
 }
 
 
