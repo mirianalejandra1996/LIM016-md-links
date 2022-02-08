@@ -1,20 +1,6 @@
 import { mdLinks } from "./mdlinks.js";
-
-// C:\Users\Miria\Desktop\MD-LINKS\LIM016-md-links\test\Archivos\filejs.js
-// console.log(convertPathAbsolute("../test/Archivos"));
-// // mdLinks("../test/Archivo23s")
-// mdLinks("../test/ArchivosDañanosjdlskjsdlkfjsj", { validate: true })
-// mdLinks("../test/Archivos", { validate: true });
-// mdLinks("../test/Archivos", { validate: true })
-// mdLinks("../test/Archivos/filejs.js", { validate: true })
-//   // mdLinks("../test/Archivos", { validate: false })
-// mdLinks("../test/Archivos/emptymd.md", { validate: true })
-// mdLinks("../test/Archivos/emptyFolder", { validate: true })
-// mdLinks("../test/Archivos/prueba", { validate: true })
-//   // mdLinks("../test/Archivos", { validate: true })
-//   // mdLinks('../test/rutaInexistente', { validate: true })
-//   .then((res) => console.log(res))
-//   .catch((err) => console.log(err));
+import { program } from "commander";
+import chalk from "chalk";
 
 const totalLinks = (links) => links.length;
 const uniqueLinks = (links) => {
@@ -27,7 +13,43 @@ const brokenLinks = (links) =>
 // mdLinks("../test/Archivos", { validate: true })
 mdLinks("../test/Archivos/filemd2.md", { validate: true })
   //   .then((res) => console.log(totalLinks(res)))
-  //   .then((res) => console.log(uniqueLinks(res)))
-  //   .then((res) => console.log(brokenLinks(res)))
-  .then((res) => console.log(res))
+  // .then((res) => console.log(uniqueLinks(res)))
+  .then((res) => console.log(brokenLinks(res)))
+  // .then((res) => console.log(res))
   .catch((err) => console.log(err));
+
+// const cli = () => {
+
+// }
+
+program.version("No tengo ninguna version");
+
+// console.log(cli);
+// cli.description("Access the JSON placeholder API");
+// cli.name("jsonp");
+
+// Commands
+program
+  .command("say <name>") //<name> es opcional el nombre, puede ser <loQueSea>
+  .description("Say Something Interesting")
+  .alias("s")
+  .action(function (ho) {
+    // console.log("comando => ", ho);
+    // console.log(saludo(ho));
+    console.log(chalk.bgMagentaBright(ho));
+    console.log("probando , ", process.argv.slice(2));
+    // console.log("probando , ", process.argv);
+  });
+
+// .action(function (name) {
+//   console.log("el name es ", name);
+//   // console.log(program);
+//   // console.log(program.name);
+// });
+
+// Options
+// program.option("-d, --do", "Do something").action(function (task) {
+//   console.log("Estoy cansada, ayudenme, pd: Patita Zurda.", task);
+// });
+
+program.parse(process.argv);
