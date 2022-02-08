@@ -28,6 +28,9 @@
   ],
   "author": "Mirian Arevalo",
   "license": "MIT",
+  "bin": {
+    "md-links": "./src/cli.js"
+  },
   "bugs": {
     "url": "https://github.com/mirianalejandra1996/LIM016-md-links/issues"
   },
