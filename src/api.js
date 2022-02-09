@@ -1,5 +1,5 @@
-const fs = require("fs");
-const path = require("path");
+const fs = require('fs');
+const path = require('path');
 const MarkdownIt = require('markdown-it');
 md = new MarkdownIt();
 const jsdom = require("jsdom");
@@ -69,9 +69,9 @@ const listArchivosMD = (route) => {
         let archivosMD = readDirectory(route)
         if (archivosMD.length == 0)
           rej(new Error("no hay archivos en este directorio"))
-        else{
+        else {
           res(archivosMD)
-        } 
+        }
       } catch (error) {
         rej(error)
       }
@@ -122,28 +122,31 @@ const getLinks = (file, html) => {
 
 const validatelinks = (links) => {
   const linksValidados = links.map((link) => {
-    return fetch(link.href)
+    const arrFetch = fetch(link.href)
       .then((res) => {
-        // console.log(res.status)
-        //   console.log(res.statusText)
-        if (res.status == 200) {
+        if (res.status >= 200 && res.status < 400) {
           return {
             ...link,
             status: res.status,
-            mensaje: 'nice' + res.statusText
+            message: res.statusText
           }
-        } else {
+        } else if (res.status >= 400 && res.status <= 500) {
           return {
             ...link,
             status: res.status,
-            mensaje: 'fail' + res.statusText
+            message: res.statusText
           }
         }
+      }).catch(() => {
+        return {
+          ...link,
+          status: 'No responde',
+          message: 'Fail'
+        }
       })
-      .catch(err => console.log(err));
-
+    return arrFetch
   })
-  return linksValidados
+  return Promise.all(linksValidados)
 }
 
 
@@ -151,15 +154,15 @@ const listLinks = (path) => {
   const absolutePath = convertirAbsoluta(path);
   const listPatharchivosMD = listArchivosMD(absolutePath)
   return listPatharchivosMD
-  .then((files)=>{
-    let arrLinksObj = []
-    files.forEach((file)=>{
-      const data = readFiles(file)
-      let markDown = dataToHtml(data)
-      arrLinksObj.push(...getLinks(file, markDown))
+    .then((files) => {
+      let arrLinksObj = []
+      files.forEach((file) => {
+        const data = readFiles(file)
+        let markDown = dataToHtml(data)
+        arrLinksObj.push(...getLinks(file, markDown))
+      })
+      return arrLinksObj
     })
-    return arrLinksObj
-  })
 }
 
 
