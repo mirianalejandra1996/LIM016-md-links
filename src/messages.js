@@ -122,11 +122,38 @@ export const statsValidate = (links) => {
     [`${chalk.hex("#FF8800").bold("Unique Links")}`, `${uniqueLinks(links)}`],
     [`${chalk.hex("#FF8800").bold("Broken Links")}`, `${brokenLinks(links)}`],
   ];
+
+  console.log("Options selected: --stats and --validate");
+  console.log(table(data));
+};
+
+export const stats = (links) => {
+  const data = [
+    [`${chalk.hex("#FF8800").bold("Total Links")}`, `${totalLinks(links)}`],
+    [`${chalk.hex("#FF8800").bold("Unique Links")}`, `${uniqueLinks(links)}`],
+  ];
+
+  console.log("Option selected: --stats");
+  console.log(table(data));
+};
+
+export const validate = (links) => {
   // const data = [
-  //   [`${chalk.hex("#FF8800").bold("Total Links")}`, "000"],
-  //   [`${chalk.hex("#FF8800").bold("Unique Links")}`, "000"],
-  //   [`${chalk.hex("#FF8800").bold("Broken Links")}`, "000"],
+  //   [`${chalk.hex("#FF8800").bold("Total Links")}`, `${totalLinks(links)}`],
+  //   [`${chalk.hex("#FF8800").bold("Unique Links")}`, `${uniqueLinks(links)}`],
   // ];
 
-  console.log(table(data));
+  // console.log("Option selected: --stats");
+  // console.log(table(data));
+
+  links.forEach((link) => {
+    console.log("Texto del link es: ", link.text);
+    console.log("Href del link es: ", link.href);
+    console.log("Archivo del link es: ", link.file);
+    console.log("el statusCode del link es: ", link.statusCode);
+    console.log("el estado del link es: ", link.message);
+    console.log("--------------------------------------------------------");
+  });
+
+  
 };

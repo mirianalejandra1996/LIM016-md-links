@@ -9,6 +9,8 @@ import {
   totalLinks,
   uniqueLinks,
   statsValidate,
+  stats,
+  validate,
 } from "./messages.js";
 // import { welcome, help } from "./messages.js";
 // import {version} from "../package.json"
@@ -91,22 +93,22 @@ if (options.help) {
 } else if (options.stats) {
   mdLinks(program.args[0], { validate: true })
     .then((links) => {
-      console.log("total de links:", totalLinks(links));
-      console.log("links unicos: ", uniqueLinks(links));
-      // console.log("links rotos: ", brokenLinks(links));
+      stats(links);
     })
     .catch((err) => console.log(err));
 } else if (options.validate) {
   mdLinks(program.args[0], { validate: true })
     .then((links) => {
-      links.forEach((link) => {
-        console.log("Texto del link es: ", link.text);
-        console.log("Href del link es: ", link.href);
-        console.log("Archivo del link es: ", link.file);
-        console.log("el statusCode del link es: ", link.statusCode);
-        console.log("el estado del link es: ", link.message);
-        console.log("--------------------------------------------------------");
-      });
+      // links.forEach((link) => {
+      //   console.log("Texto del link es: ", link.text);
+      //   console.log("Href del link es: ", link.href);
+      //   console.log("Archivo del link es: ", link.file);
+      //   console.log("el statusCode del link es: ", link.statusCode);
+      //   console.log("el estado del link es: ", link.message);
+      //   console.log("--------------------------------------------------------");
+      // });
+
+      validate(links);
     })
     .catch((err) => console.log(err));
 }
