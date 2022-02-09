@@ -3,6 +3,7 @@
 import { mdLinks } from "./mdlinks.js";
 import { program } from "commander";
 import chalk from "chalk";
+// import {version} from "../package.json"
 const [, , ...args] = process.argv;
 
 const totalLinks = (links) => links.length;
@@ -23,58 +24,28 @@ const brokenLinks = (links) =>
 // !-------------------------------------------------------------------------------------------
 
 program
-  .name("string-util")
-  .description("CLI to some JavaScript string utilities")
-  .version("0.8.0");
-
-// program
-//   .command("split")
-//   .description("Split a string into substrings and display as an array.")
-//   .argument("<string>", "string to split")
-//   .option("--first", "display just the first substring")
-//   .option("-s, --separator <char>", "separator character", ",")
-//   .action((str, options) => {
-//     const limit = options.first ? 1 : undefined;
-//     console.log(str.split(options.separator, limit));
-//   });
-
-// program
-//   .command("join")
-//   .description("Join the command-arguments into a single string")
-//   .argument("<strings...>", "one or more strings")
-//   .option("-s, --separator <char>", "separator character", ",")
-//   .action((strings, options) => {
-//     console.log(strings.join(options.separator));
-//   });
-
-// program
-//   .command("--join")
-//   .description("Join the command-arguments into a single string")
-//   .argument("<strings...>", "one or more strings")
-//   .option("-s, --separator <char>", "separator character", ",")
-//   .action((strings, options) => {
-//     console.log(strings.join(options.separator));
-//   });
-// program.parse();
-
-
+  .name("miale-links")
+  .description("CLI to check links of markdown files")
+  .version(
+    "1.0.0",
+    "-v, --version",
+    "Muestra la versión actual del paquete NPM 'miale-links'"
+  );
 
 // !-------------------------------------------------------------------------------------------
 
 program
-  .argument('<name>')
-  .option('-t, --title <honorific>', 'title to use before name')
-  .option('-d, --debug', 'display some debugging')
-  .action((name, options, command) => {
-    if (options.debug) {
-      console.error('Called %s with options %o', command.name(), options);
-    }
-    const title = options.title ? `${options.title} ` : '';
-    console.log(`Thank-you ${title}${name}`);
-  });
+  .argument("[ruta]") //En caso que no coloque ninguna ruta
+  .option("--stats", "Muestra links totales, únicos y rotos")
+  .option("--validate", "Muestra links validados (ok y statusCode)")
+  .option("--help", "output help message");
 
 program.parse(process.argv);
 
+const options = program.opts();
+console.log("mira mis opciones ", options);
+console.log("mira mis argumentos", program.args);
+// console.log("mira mis argumentos", program.args[0]);
 
 // !-------------------------------------------------------------------------------------------
 // md-links ./some/example.md --validate
