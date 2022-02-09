@@ -2,13 +2,8 @@
 
 import { mdLinks } from "./mdlinks.js";
 import { program } from "commander";
-import chalk from "chalk";
-// import CFonts from "cfonts";
-
-import { welcome } from "./messages.js";
-
+import { welcome, help } from "./messages.js";
 // import {version} from "../package.json"
-const [, , ...args] = process.argv;
 
 const totalLinks = (links) => links.length;
 const uniqueLinks = (links) => {
@@ -17,6 +12,7 @@ const uniqueLinks = (links) => {
 const brokenLinks = (links) =>
   links.filter((link) => link.statusCode === 404).length;
 
+welcome();
 // !-------------------------------------------------------------------------------------------
 
 program
@@ -38,20 +34,43 @@ program
   .option("--validate", "Muestra links validados (ok y statusCode)")
   .option("--help", "output help message");
 
+function errorColor(str) {
+  // Add ANSI escape codes to display text in red.
+  return `\x1b[31m${str}\x1b[0m`;
+}
+
+program.configureOutput({
+  // Visibly override write routines as example!
+  writeOut: (str) => process.stdout.write(`[OUT] ${str}`),
+  writeErr: (str) =>
+    process.stdout.write(`[ERR] ${str}
+  
+  LE MOSTRAMOS LA LISTA DE HELP
+
+  ${help()}
+  `),
+  // Output errors in red.
+  outputError: (str, write) => write(errorColor(str)),
+});
+
 program.parse(process.argv);
 
 const options = program.opts();
-// console.log("mira mis opciones ", options);
+// console.log("este es options, ", options);
 // console.log("mira mis argumentos", program.args);
-// console.log("mira mis argumentos", program.args[0]);
 
-if ((options.stats || options.validate) && program.args.length === 0) {
+if (options.help) {
+  help();
+} else if ((options.stats || options.validate) && program.args.length === 0) {
   console.log("Por favor ingrese una ruta");
-} else if ((options.stats || options.validate) && program.args.length > 0) {
+} else if (
+  (options.stats && program.args.length >= 1) ||
+  (options.validate && program.args.length >= 1)
+) {
   console.log("Solo puede ingresar una ruta");
-} else if (options.help && program.args.length === 0) {
-  console.log("pido ayuda");
-} else if (!options.stats && !options.validate) {
+} /*else if (options.help && program.args.length === 0) {
+  help();
+} */ else if (!options.stats && !options.validate) {
   mdLinks(program.args[0], { validate: false })
     .then((links) => {
       links.forEach((link) => {
@@ -98,28 +117,4 @@ if ((options.stats || options.validate) && program.args.length === 0) {
 // md-links ./some/example.md --stats
 // md-links ./some/example.md --stats --validate
 
-console.log(
-  "Esta es una herramienta para la lectura y análisis archivos en formato MD"
-);
-console.log("Uso: miale-links <path> [option]");
-console.log(`Options: 
-
---version, -v
-Use to display the version of miale-links
-
---help, -h
-Use to display this help
-
---validate, -va
-Use to XXXXXXXXXXXXXXx
-
---stats, -s
-Use to XXXXXXXXXXX
-
-`);
-console.log("Example: miale-links ./some/example.md --validate");
-console.log("aaaa");
-console.log("aaaa");
-console.log("aaaa");
-console.log("aaaa");
-console.log("aaaa");
+// help();
