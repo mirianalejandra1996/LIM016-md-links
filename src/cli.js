@@ -2,15 +2,16 @@
 
 import { mdLinks } from "./mdlinks.js";
 import { program } from "commander";
-import { welcome, help } from "./messages.js";
+import {
+  welcome,
+  help,
+  brokenLinks,
+  totalLinks,
+  uniqueLinks,
+  statsValidate,
+} from "./messages.js";
+// import { welcome, help } from "./messages.js";
 // import {version} from "../package.json"
-
-const totalLinks = (links) => links.length;
-const uniqueLinks = (links) => {
-  return new Set(links.map((link) => link.href)).size;
-};
-const brokenLinks = (links) =>
-  links.filter((link) => link.statusCode === 404).length;
 
 welcome();
 // !-------------------------------------------------------------------------------------------
@@ -30,9 +31,9 @@ program
 
 program
   .argument("[ruta]") //En caso que no coloque ninguna ruta
-  .option("--stats", "Muestra links totales, únicos y rotos")
-  .option("--validate", "Muestra links validados (ok y statusCode)")
-  .option("--help", "output help message");
+  .option("-s,--stats", "Muestra links totales, únicos y rotos")
+  .option("-va,--validate", "Muestra links validados (ok y statusCode)")
+  .option("-h,--help", "output help message");
 
 function errorColor(str) {
   // Add ANSI escape codes to display text in red.
@@ -64,8 +65,8 @@ if (options.help) {
 } else if ((options.stats || options.validate) && program.args.length === 0) {
   console.log("Por favor ingrese una ruta");
 } else if (
-  (options.stats && program.args.length >= 1) ||
-  (options.validate && program.args.length >= 1)
+  (options.stats && program.args.length > 1) ||
+  (options.validate && program.args.length > 1)
 ) {
   console.log("Solo puede ingresar una ruta");
 } /*else if (options.help && program.args.length === 0) {
@@ -84,9 +85,7 @@ if (options.help) {
 } else if (options.stats && options.validate) {
   mdLinks(program.args[0], { validate: true })
     .then((links) => {
-      console.log("total de links:", totalLinks(links));
-      console.log("links unicos: ", uniqueLinks(links));
-      console.log("links rotos: ", brokenLinks(links));
+      statsValidate(links);
     })
     .catch((err) => console.log(err));
 } else if (options.stats) {
