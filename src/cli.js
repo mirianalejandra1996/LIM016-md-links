@@ -3,6 +3,10 @@
 import { mdLinks } from "./mdlinks.js";
 import { program } from "commander";
 import chalk from "chalk";
+// import CFonts from "cfonts";
+
+import { welcome } from "./messages.js";
+
 // import {version} from "../package.json"
 const [, , ...args] = process.argv;
 
@@ -12,14 +16,6 @@ const uniqueLinks = (links) => {
 };
 const brokenLinks = (links) =>
   links.filter((link) => link.statusCode === 404).length;
-
-// mdLinks("../test/Archivos", { validate: true })
-// mdLinks("../test/Archivos/filemd2.md", { validate: true })
-//   .then((res) => console.log(totalLinks(res)))
-// .then((res) => console.log(uniqueLinks(res)))
-// .then((res) => console.log(brokenLinks(res)))
-// .then((res) => console.log(res))
-// .catch((err) => console.log(err));
 
 // !-------------------------------------------------------------------------------------------
 
@@ -33,6 +29,8 @@ program
   );
 
 // !-------------------------------------------------------------------------------------------
+// mdLinks("../test/Archivos", { validate: true })
+// mdLinks("../test/Archivos/filemd2.md", { validate: true })
 
 program
   .argument("[ruta]") //En caso que no coloque ninguna ruta
@@ -43,11 +41,64 @@ program
 program.parse(process.argv);
 
 const options = program.opts();
-console.log("mira mis opciones ", options);
-console.log("mira mis argumentos", program.args);
+// console.log("mira mis opciones ", options);
+// console.log("mira mis argumentos", program.args);
 // console.log("mira mis argumentos", program.args[0]);
+
+if ((options.stats || options.validate) && program.args.length === 0) {
+  console.log("Por favor ingrese una ruta");
+} else if ((options.stats || options.validate) && program.args.length > 0) {
+  console.log("Solo puede ingresar una ruta");
+} else if (options.help && program.args.length === 0) {
+  console.log("pido ayuda");
+} else if (!options.stats && !options.validate) {
+  mdLinks(program.args[0], { validate: false })
+    .then((links) => {
+      links.forEach((link) => {
+        console.log("Texto del link es: ", link.text);
+        console.log("Href del link es: ", link.href);
+        console.log("Archivo del link es: ", link.file);
+        console.log("--------------------------------------------------------");
+      });
+    })
+    .catch((err) => console.log(err));
+} else if (options.stats && options.validate) {
+  mdLinks(program.args[0], { validate: true })
+    .then((links) => {
+      console.log("total de links:", totalLinks(links));
+      console.log("links unicos: ", uniqueLinks(links));
+      console.log("links rotos: ", brokenLinks(links));
+    })
+    .catch((err) => console.log(err));
+} else if (options.stats) {
+  mdLinks(program.args[0], { validate: true })
+    .then((links) => {
+      console.log("total de links:", totalLinks(links));
+      console.log("links unicos: ", uniqueLinks(links));
+      // console.log("links rotos: ", brokenLinks(links));
+    })
+    .catch((err) => console.log(err));
+} else if (options.validate) {
+  mdLinks(program.args[0], { validate: true })
+    .then((links) => {
+      links.forEach((link) => {
+        console.log("Texto del link es: ", link.text);
+        console.log("Href del link es: ", link.href);
+        console.log("Archivo del link es: ", link.file);
+        console.log("el statusCode del link es: ", link.statusCode);
+        console.log("el estado del link es: ", link.message);
+        console.log("--------------------------------------------------------");
+      });
+    })
+    .catch((err) => console.log(err));
+}
 
 // !-------------------------------------------------------------------------------------------
 // md-links ./some/example.md --validate
 // md-links ./some/example.md --stats
 // md-links ./some/example.md --stats --validate
+
+console.log("aaaa");
+console.log("aaaa");
+console.log("aaaa");
+console.log("aaaa");
