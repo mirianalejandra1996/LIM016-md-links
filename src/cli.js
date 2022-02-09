@@ -2,17 +2,7 @@
 
 import { mdLinks } from "./mdlinks.js";
 import { program } from "commander";
-import {
-  welcome,
-  help,
-  brokenLinks,
-  totalLinks,
-  uniqueLinks,
-  statsValidate,
-  stats,
-  validate,
-} from "./messages.js";
-// import { welcome, help } from "./messages.js";
+import { welcome, help, statsValidate, stats, validate } from "./messages.js";
 // import {version} from "../package.json"
 
 welcome();

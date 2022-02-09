@@ -35,7 +35,12 @@ const mdLinks = (path, options) => {
               return links.flat().filter((link) => typeof link === "object");
             })
             .then((data) => {
-              return validatedLinks(data, options.validate);
+              // console.log("esto es lo que tengo antes de validar", data);
+              if (options.validate) {
+                return validatedLinks(data);
+              }
+
+              return data;
             })
             .then((valLinks) => {
               return valLinks.length === 0

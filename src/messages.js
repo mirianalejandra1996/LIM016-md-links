@@ -145,15 +145,35 @@ export const validate = (links) => {
 
   // console.log("Option selected: --stats");
   // console.log(table(data));
+  const lista = [];
 
-  links.forEach((link) => {
-    console.log("Texto del link es: ", link.text);
-    console.log("Href del link es: ", link.href);
-    console.log("Archivo del link es: ", link.file);
-    console.log("el statusCode del link es: ", link.statusCode);
-    console.log("el estado del link es: ", link.message);
-    console.log("--------------------------------------------------------");
+  let prueba;
+  prueba = links.map((link) => {
+    return [
+      link.text.slice(0, 51),
+      link.href,
+      link.file,
+      link.statusCode,
+      link.message,
+    ];
   });
 
-  
+  prueba[0] = [
+    "Text",
+    "URL",
+    "File's path where link\nwas found",
+    "Status\nCode",
+    "Message",
+  ];
+
+  const config = {
+    columns: {
+      0: { width: 35 },
+      1: { width: 30 },
+      2: { width: 25 },
+      3: { width: 8 },
+      4: { width: 8 },
+    },
+  };
+  console.log(table(prueba, config));
 };

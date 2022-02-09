@@ -84,17 +84,12 @@ const validatedLink = (link) => {
   });
 };
 
-const validatedLinks = (links, validate) => {
+const validatedLinks = (links) => {
   return new Promise((resolve, reject) => {
     // es un array de promesas
     const newLinks = [];
 
-    if (validate) {
-      links.forEach((link) => newLinks.push(validatedLink(link)));
-    } else {
-      // Si validate es false, entonces retornarán los links como entraron a la función.
-      resolve(links);
-    }
+    links.forEach((link) => newLinks.push(validatedLink(link)));
 
     return Promise.all(newLinks)
       .then((res) => resolve(res))
