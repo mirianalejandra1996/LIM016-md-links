@@ -98,6 +98,26 @@ if ((options.stats || options.validate) && program.args.length === 0) {
 // md-links ./some/example.md --stats
 // md-links ./some/example.md --stats --validate
 
+console.log(
+  "Esta es una herramienta para la lectura y análisis archivos en formato MD"
+);
+console.log("Uso: miale-links <path> [option]");
+console.log(`Options: 
+
+--version, -v
+Use to display the version of miale-links
+
+--help, -h
+Use to display this help
+
+--validate, -va
+Use to XXXXXXXXXXXXXXx
+
+--stats, -s
+Use to XXXXXXXXXXX
+
+`);
+console.log("Example: miale-links ./some/example.md --validate");
 console.log("aaaa");
 console.log("aaaa");
 console.log("aaaa");
