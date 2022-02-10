@@ -65,22 +65,16 @@ export const help = () => {
 
   // console.log(coolGradient(happy));
 
-  // console.log(
-  //   "💻 MD-LINKS It's a tool for reads and parses Markdown files, to verify the links they contain and to report some statistics \n"
-  // );
-
   console.log(
     "Usage: miale-links <path> [option]                          Example: miale-links ./some/example.md --validate"
   );
 
   const data = [
-    // ["OPTIONS", "ALIAS", "DESCRIPTION"],
     [
       `${chalk.hex("#FF8800").bold("OPTIONS")}`,
       `${chalk.hex("#FF8800").bold("ALIAS")}`,
       `${chalk.hex("#FF8800").bold("DESCRIPTION")}`,
     ],
-    // "ALIAS", "DESCRIPTION"],
     ["--help", "-h", "Use to display this help"],
     [
       "--validate",
@@ -108,7 +102,7 @@ export const help = () => {
   ];
 
   console.log(table(data));
-  console.log("😞");
+  // console.log("😞");
   // console.log(coolGradient(happy));
   // console.log(coolGradient(table(data)));
   // console.log(chalk.yellow(table(data)));
@@ -137,14 +131,7 @@ export const stats = (links) => {
   console.log(table(data));
 };
 
-export const validate = (links) => {
-  // const data = [
-  //   [`${chalk.hex("#FF8800").bold("Total Links")}`, `${totalLinks(links)}`],
-  //   [`${chalk.hex("#FF8800").bold("Unique Links")}`, `${uniqueLinks(links)}`],
-  // ];
-
-  // console.log("Option selected: --stats");
-  // console.log(table(data));
+export const tableLinksValidated = (links) => {
   const lista = [];
 
   let prueba;
@@ -159,11 +146,11 @@ export const validate = (links) => {
   });
 
   prueba[0] = [
-    "Text",
-    "URL",
-    "File's path where link\nwas found",
-    "Status\nCode",
-    "Message",
+    `${chalk.hex("#FF8800").bold("Text")}`,
+    `${chalk.hex("#FF8800").bold("URL")}`,
+    `${chalk.hex("#FF8800").bold("File's path where link\nwas found")}`,
+    `${chalk.hex("#FF8800").bold("Status\nCode")}`,
+    `${chalk.hex("#FF8800").bold("Message")}`,
   ];
 
   const config = {
@@ -173,6 +160,30 @@ export const validate = (links) => {
       2: { width: 25 },
       3: { width: 8 },
       4: { width: 8 },
+    },
+  };
+  console.log(table(prueba, config));
+};
+
+export const tableLinks = (links) => {
+  const lista = [];
+
+  let prueba;
+  prueba = links.map((link) => {
+    return [link.text.slice(0, 51), link.href, link.file];
+  });
+
+  prueba[0] = [
+    `${chalk.hex("#FF8800").bold("Text")}`,
+    `${chalk.hex("#FF8800").bold("URL")}`,
+    `${chalk.hex("#FF8800").bold("File's path where link\nwas found")}`,
+  ];
+
+  const config = {
+    columns: {
+      0: { width: 35 },
+      1: { width: 35 },
+      2: { width: 35 },
     },
   };
   console.log(table(prueba, config));
