@@ -10,6 +10,7 @@ import {
   tableLinksValidated,
   tableLinks,
   errorMessage,
+  outputMessage,
 } from "./messages.js";
 
 welcome();
@@ -37,8 +38,8 @@ program
 // ! ---------------
 
 program.configureOutput({
-  writeOut: (str) =>
-    process.stdout.write(`The version of this package is ${str}`),
+  // writeOut: (str) =>
+  // process.stdout.write(`The version of this package is ${str}`),
   writeErr: (str) => process.stdout.write(`😞  ${str}\n`),
 
   // Output errors in red (errorMessage fn())
@@ -134,7 +135,7 @@ if (Object.keys(options).length > 2) {
         .then((links) => {
           tableLinks(links);
         })
-        .catch((err) => console.log(errorMessage(err)));
+        .catch((err) => console.log(outputMessage(err)));
     }
   }
 
@@ -151,7 +152,7 @@ if (Object.keys(options).length > 2) {
         .then((links) => {
           statsValidate(links);
         })
-        .catch((err) => console.log(errorMessage(err)));
+        .catch((err) => console.log(outputMessage(err)));
     }
   }
   // si selecciona solo --stats
@@ -171,7 +172,7 @@ if (Object.keys(options).length > 2) {
         .then((links) => {
           stats(links);
         })
-        .catch((err) => console.log(errorMessage(err)));
+        .catch((err) => console.log(outputMessage(err)));
     }
   }
 
@@ -192,7 +193,7 @@ if (Object.keys(options).length > 2) {
         .then((links) => {
           tableLinksValidated(links);
         })
-        .catch((err) => console.log(errorMessage(err)));
+        .catch((err) => console.log(outputMessage(err)));
   }
 }
 

@@ -5,7 +5,7 @@ import {
   extractedLinks,
   validatedLinks,
   getMDFiles,
-} from "./functions.js";
+} from "./mdFunctions.js";
 
 const mdLinks = (path, options) => {
   return new Promise((resolve, reject) => {

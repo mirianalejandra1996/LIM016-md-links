@@ -1,15 +1,8 @@
 import CFonts from "cfonts";
 import gradient from "gradient-string";
-import AsciiEmojiParser from "ascii-emoji-parser";
 import { table } from "table";
 import chalk from "chalk";
-
-export const totalLinks = (links) => links.length;
-export const uniqueLinks = (links) => {
-  return new Set(links.map((link) => link.href)).size;
-};
-export const brokenLinks = (links) =>
-  links.filter((link) => link.statusCode === 404).length;
+import { totalLinks, uniqueLinks, brokenLinks } from "./cliFunctions.js";
 
 export const welcome = () => {
   let line =
@@ -24,11 +17,9 @@ export const welcome = () => {
     colors: ["system"], // define all colors
     letterSpacing: 1, // define letter spacing
     lineHeight: 0, // define the line height
-    //   lineHeight: 1, // define the line height
     space: false, // define if the output text should have empty lines on top and on the bottom
-    //   space: true, // define if the output text should have empty lines on top and on the bottom
     maxLength: "0", // define how many character can be on one line
-    gradient: ["#00FFF6", "#22FF00", "#F9FF00", "#FF5C00"], // define your two gradient colors
+    gradient: ["#00FFF6", "#22FF00", "#F9FF00", "#FF5C00"], // define your gradient colors
     independentGradient: false, // define if you want to recalculate the gradient for each new line
     transitionGradient: true, // define if this is a transition between colors directly
     env: "node", // define the environment CFonts is being executed in
@@ -36,19 +27,18 @@ export const welcome = () => {
 
   // El eslogan
   CFonts.say("  tool checker", {
-    font: "chrome", // define the font face
-    align: "left", // define text alignment
-    colors: ["system"], // define all colors
-    letterSpacing: 1, // define letter spacing
-    lineHeight: 1, // define the line height
-    space: false, // define if the output text should have empty lines on top and on the bottom
-    maxLength: "0", // define how many character can be on one line
-    // maxLength: "0", // define how many character can be on one line
-    length: "2", // define how many character can be on one line
-    gradient: ["#00FFF6", "#22FF00", "#F9FF00", "#FF5C00"], // define your two gradient colors
-    independentGradient: false, // define if you want to recalculate the gradient for each new line
-    transitionGradient: true, // define if this is a transition between colors directly
-    env: "node", // define the environment CFonts is being executed in
+    font: "chrome",
+    align: "left",
+    colors: ["system"],
+    letterSpacing: 1,
+    lineHeight: 1,
+    space: false,
+    maxLength: "0",
+    length: "2",
+    gradient: ["#00FFF6", "#22FF00", "#F9FF00", "#FF5C00"],
+    independentGradient: false,
+    transitionGradient: true,
+    env: "node",
   });
 
   console.log(coolGradient(line));
@@ -56,12 +46,13 @@ export const welcome = () => {
 
 export const help = () => {
   console.log(`
-    "Usage: miale-links <path> [option]"                   Example: miale-links --help
-                                                           Example: miale-links --version
-                                                           Example: miale-links ./some/example.md --validate
-                                                           Example: miale-links ./some/example.md --stats
-                                                           Example: miale-links ./some/example.md --stats --validate
-                                                           Example: miale-links ./some/example.md 
+    "Usage: miale-links <path> [option]"                   
+    
+    Note: You can also use the alias command.           i.e. miale-links -h
+                                                             miale-links -v
+                                                             miale-links ./some/example.md -s
+                                                             miale-links ./some/example.md -va
+                                                             miale-links ./some/example.md -s -va
   `);
 
   const data = [
@@ -69,28 +60,52 @@ export const help = () => {
       `${chalk.hex("#FF8800").bold("OPTIONS")}`,
       `${chalk.hex("#FF8800").bold("ALIAS")}`,
       `${chalk.hex("#FF8800").bold("DESCRIPTION")}`,
+      `${chalk.hex("#FF8800").bold("EXAMPLE")}`,
     ],
-    ["--help", "-h", "Use to display this help"],
-    ["--version", "-v", "Use to display the version of md-links package"],
+    ["--help", "-h", "Use to display this help", "miale-links --help"],
+    [
+      "--version",
+      "-v",
+      "Use to display the version of this\nmd-links package",
+      "miale-links --version",
+    ],
     [
       "--validate",
       "-va",
-      "Use to display a list of extra link information (StatusCode, and Ok or Fail)",
+      "Use to display a list of extra link\ninformation (StatusCode, and Ok or\nFail)",
+      "miale-links ./some/example.md --validate",
     ],
     [
       "--stats",
       "-s",
-      "Use to display statistical link information (Total links and Unique links)",
+      "Use to display statistical link\ninformation (Total links and Unique\nlinks)",
+      "miale-links ./some/example.md --stats",
     ],
     [
       "--stats --validate",
       "-s -va",
-      "Use to display statistical link information (Total links, Unique links and Broken Liks)",
+      "Use to display statistical link\ninformation (Total links, Unique\nlinks and Broken Liks)",
+      "miale-links ./some/example.md --stats\n--validate",
     ],
-    ["Empty option", "", "Use to display a list of basic link information"],
+    [
+      "Empty option",
+      "",
+      "Use to display a list of basic link\ninformation",
+      "miale-links ./some/example.md",
+    ],
   ];
 
-  console.log(table(data));
+  // Con config puedo controlar las medidas de mi tabla.
+  const config = {
+    columns: {
+      0: { width: 20 },
+      1: { width: 8 },
+      2: { width: 37 },
+      3: { width: 40 },
+      // 4: { width: 8 },
+    },
+  };
+  console.log(table(data, config));
 };
 
 export const statsValidate = (links) => {
@@ -189,5 +204,7 @@ export const tableLinks = (links) => {
   console.log(table(prueba, config));
 };
 
-// Add ANSI escape codes to display text in red.
+// Para lanzar mensajes de salida con formato de letras amarillas
+export const outputMessage = (str) => `${chalk.yellow(str)}`;
+// Para lanzar mensajes de error con formato de letras rojas
 export const errorMessage = (str) => `${chalk.redBright(str)}`;
