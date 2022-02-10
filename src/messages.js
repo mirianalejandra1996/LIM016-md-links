@@ -115,7 +115,7 @@ export const statsValidate = (links) => {
     [`${chalk.hex("#FF8800").bold("Broken Links")}`, `${brokenLinks(links)}`],
   ];
 
-  console.log("Options selected: --stats and --validate\n");
+  console.log("\nOptions selected: --stats and --validate\n");
 
   const config = {
     columns: {
@@ -132,7 +132,7 @@ export const stats = (links) => {
     [`${chalk.hex("#FF8800").bold("Unique Links")}`, `${uniqueLinks(links)}`],
   ];
 
-  console.log("Option selected: --stats\n");
+  console.log("\nOption selected: --stats\n");
 
   const config = {
     columns: {
@@ -144,7 +144,7 @@ export const stats = (links) => {
 };
 
 export const tableLinksValidated = (links) => {
-  console.log("Option selected: --validate\n");
+  console.log("\nOption selected: --validate\n");
 
   const lista = [];
 
@@ -180,7 +180,7 @@ export const tableLinksValidated = (links) => {
 };
 
 export const tableLinks = (links) => {
-  console.log("Option selected: NONE\n");
+  console.log("\nOption selected: NONE\n");
   const lista = [];
 
   let prueba;
