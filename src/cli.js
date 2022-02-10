@@ -51,12 +51,12 @@ const options = program.opts();
 if (options.help) {
   help();
 } else if ((options.stats || options.validate) && program.args.length === 0) {
-  console.log("Por favor ingrese una ruta");
+  console.log(console.log(errorMessage("Por favor ingrese una ruta")));
 } else if (
   (options.stats && program.args.length > 1) ||
   (options.validate && program.args.length > 1)
 ) {
-  console.log("Solo puede ingresar una ruta");
+  console.log(console.log(errorMessage("Solo puede ingresar una ruta")));
 } /*else if (options.help && program.args.length === 0) {
   help();
 } */ else if (!options.stats && !options.validate) {
@@ -64,23 +64,23 @@ if (options.help) {
     .then((links) => {
       tableLinks(links);
     })
-    .catch((err) => console.log(err));
+    .catch((err) => console.log(errorMessage(err)));
 } else if (options.stats && options.validate) {
   mdLinks(program.args[0], { validate: true })
     .then((links) => {
       statsValidate(links);
     })
-    .catch((err) => console.log(err));
+    .catch((err) => console.log(errorMessage(err)));
 } else if (options.stats) {
   mdLinks(program.args[0], { validate: true })
     .then((links) => {
       stats(links);
     })
-    .catch((err) => console.log(err));
+    .catch((err) => console.log(errorMessage(err)));
 } else if (options.validate) {
   mdLinks(program.args[0], { validate: true })
     .then((links) => {
       tableLinksValidated(links);
     })
-    .catch((err) => console.log(err));
+    .catch((err) => console.log(errorMessage(err)));
 }
