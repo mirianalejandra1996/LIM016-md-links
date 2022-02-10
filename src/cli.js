@@ -2,7 +2,6 @@
 
 import { mdLinks } from "./mdlinks.js";
 import { program } from "commander";
-import ora from "ora";
 import { createSpinner } from "nanospinner";
 import {
   welcome,
@@ -18,8 +17,6 @@ import {
 welcome();
 // !------------------------------------------------
 
-const sleep = (ms = 2000) => new Promise((r) => setTimeout(r, ms));
-
 const spinner = createSpinner("Loading request\n").start();
 
 function handleAnswer(isCorrect) {
@@ -30,22 +27,6 @@ function handleAnswer(isCorrect) {
     process.exit(1);
   }
 }
-// function handleAnswer(
-//   // async function handleAnswer(
-//   isCorrect,
-//   message = "Process was completed successfully!"
-// ) {
-//   // const spinner = createSpinner("Loading request").start();
-//   // await sleep();
-
-//   if (isCorrect) {
-//     spinner.success({ text: `${message}` });
-//   } else {
-//     spinner.error({ text: ` ` });
-//     // spinner.error({ text: `E` });
-//     process.exit(1);
-//   }
-// }
 
 // !------------------------------------------------
 // Si solo quiere saber la version
@@ -88,13 +69,14 @@ const options = program.opts();
 // ! si escribe dos rutas pero no escribe ninguna opcion
 // md-links .some/example.md .some/example2.md
 if (program.args.length > 1) {
-  console.log(errorMessage("\n✖  Error:Solo puede ingresar una ruta"));
+  console.log(errorMessage("\n✖  Error: You can only enter one path\n"));
   help();
+  handleAnswer(false);
 }
 
 // EN CASO QUE HAYA ESCRITO MAS DE DOS OPCIONES
 if (Object.keys(options).length > 2) {
-  console.log(errorMessage("\n✖  Error:Error al ingresar opciones"));
+  console.log(errorMessage("\n✖  Error: Too much options\n"));
   help();
   handleAnswer(false);
 } else {
@@ -107,25 +89,28 @@ if (Object.keys(options).length > 2) {
       // console.log("The version of this package is 1.0.0");
       console.log(
         errorMessage(
-          "\n✖  Error:Parece que ingresaste una ruta, recuerda que al seleccionar la opción --help mostrará this help"
+          "\n✖  Error:Parece que ingresaste una ruta, recuerda que al seleccionar la opción --help mostrará this help\n"
         )
       );
       help();
+      handleAnswer(false);
     }
     // Si solo tiene la opción -v
     else if (Object.keys(options).length === 1) {
-      console.log("Haz seleccionado el comando -h --help\n");
+      console.log("\nYou've selected the --help option\n");
       help();
+      handleAnswer(false);
     }
     // Si tiene más de una opción seleccionada como -h -v o cualquier otra con -h
     else if (Object.keys(options).length > 1) {
       console.log("y esto");
       console.log(
         errorMessage(
-          "\n✖  Error: You've selected the --help option and another command, Enter only -h or --help for help"
+          "\n✖  Error: You've selected the --help option and another command, Enter only -h or --help for help\n"
         )
       );
       help();
+      handleAnswer(false);
     }
   }
   // ! Si quiere conocer la versión del paquete
@@ -135,21 +120,23 @@ if (Object.keys(options).length > 2) {
     if (Object.keys(options).length > 1) {
       console.log(
         errorMessage(
-          "\n✖  Error: You've selected the --version option and another command, Enter only -v or --version to display the version of this md-links package"
+          "\n✖  Error: You've selected the --version option and another command, Enter only -v or --version to display the version of this md-links package\n"
         )
       );
       help();
+      handleAnswer(false);
     } else if (program.args.length >= 1) {
       console.log(
         errorMessage(
-          "\n✖  Error: Para conocer la versión solo escriba md-links -v or md-links --version"
+          "\n✖  Error: To display the package version just type md-links -v or md-links --version\n"
         )
       );
       help();
+      handleAnswer(false);
     }
     // No debe colocar ninguna ruta (length === 0) para conocer la version del paquete
     else {
-      console.log("The version of this package is 1.0.0");
+      console.log("\nThe version of this package is 1.0.0\n");
     }
   }
 
@@ -162,13 +149,15 @@ if (Object.keys(options).length > 2) {
       // si no escribe ninguna opcion ni una ruta
       // md-links
       console.log(
-        errorMessage("\n✖  Error: Ingrese una ruta o ingrese alguna opción")
+        errorMessage("\n✖  Error: Enter a path or enter an option\n")
       );
       help();
+      handleAnswer(false);
     } else if (program.args.length === 1) {
       mdLinks(program.args[0], { validate: false })
         .then((links) => {
           tableLinks(links);
+          handleAnswer(true);
         })
         .catch((err) => console.log(outputMessage(err)));
     }
@@ -180,8 +169,9 @@ if (Object.keys(options).length > 2) {
     if (program.args.length === 0) {
       // si no escribe ninguna una ruta
       // md-links -s -v
-      console.log(errorMessage("\n✖  Error: Por favor ingrese una ruta"));
+      console.log(errorMessage("\n✖  Error: Por favor ingrese una ruta\n"));
       help();
+      handleAnswer(false);
     } else {
       mdLinks(program.args[0], { validate: true })
         .then((links) => {
@@ -204,12 +194,14 @@ if (Object.keys(options).length > 2) {
     } else if (program.args.length === 0) {
       // si no escribe ninguna una ruta
       // md-links -s
-      console.log(errorMessage("\n✖  Error: Por favor ingrese una ruta"));
+      console.log(errorMessage("\n✖  Error: Por favor ingrese una ruta\n"));
       help();
+      handleAnswer(false);
     } else {
       mdLinks(program.args[0], { validate: true })
         .then((links) => {
           stats(links);
+          handleAnswer(true);
         })
         .catch((err) => console.log(outputMessage(err)));
     }
@@ -225,12 +217,14 @@ if (Object.keys(options).length > 2) {
     } else if (program.args.length === 0) {
       // si no escribe ninguna una ruta
       // md-links -v
-      console.log(errorMessage("\n✖  Error: Por favor ingrese una ruta"));
+      console.log(errorMessage("\n✖  Error: Por favor ingrese una ruta\n"));
       help();
+      handleAnswer(false);
     } else
       mdLinks(program.args[0], { validate: true })
         .then((links) => {
           tableLinksValidated(links);
+          handleAnswer(true);
         })
         .catch((err) => console.log(outputMessage(err)));
   }
