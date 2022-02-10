@@ -9,24 +9,19 @@ import {
   stats,
   tableLinksValidated,
   tableLinks,
+  errorMessage,
 } from "./messages.js";
-// import {version} from "../package.json"
 
 welcome();
-// !-------------------------------------------------------------------------------------------
 
 program
-  .name("miale-links")
+  .name("md-links")
   .description("CLI to check links of markdown files")
   .version(
     "1.0.0",
     "-v, --version",
-    "Muestra la versión actual del paquete NPM 'miale-links'"
+    "Shows the current version of the npm package 'md-links'"
   );
-
-// !-------------------------------------------------------------------------------------------
-// mdLinks("../test/Archivos", { validate: true })
-// mdLinks("../test/Archivos/filemd2.md", { validate: true })
 
 program
   .argument("[ruta]") //En caso que no coloque ninguna ruta
@@ -34,22 +29,17 @@ program
   .option("-va,--validate", "Muestra links validados (ok y statusCode)")
   .option("-h,--help", "output help message");
 
-function errorColor(str) {
-  // Add ANSI escape codes to display text in red.
-  return `\x1b[31m${str}\x1b[0m`;
-}
-
 program.configureOutput({
-  writeOut: (str) => process.stdout.write(`[OUT] ${str}`),
-  writeErr: (str) => process.stdout.write(`😞   ${str}\n`),
+  writeOut: (str) =>
+    process.stdout.write(`The version of this package is ${str}`),
+  writeErr: (str) => process.stdout.write(`😞  ${str}\n`),
 
-  // Output errors in red.
+  // Output errors in red (errorMessage fn())
   outputError: (str, write) => {
-    write(errorColor(str));
+    write(errorMessage(str));
     help();
   },
 });
-
 
 program.parse(process.argv);
 
@@ -73,7 +63,6 @@ if (options.help) {
   mdLinks(program.args[0], { validate: false })
     .then((links) => {
       tableLinks(links);
-      // tableLinksValidated(links);
     })
     .catch((err) => console.log(err));
 } else if (options.stats && options.validate) {
@@ -95,8 +84,3 @@ if (options.help) {
     })
     .catch((err) => console.log(err));
 }
-
-// !-------------------------------------------------------------------------------------------
-// md-links ./some/example.md --validate
-// md-links ./some/example.md --stats
-// md-links ./some/example.md --stats --validate

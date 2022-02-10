@@ -52,19 +52,9 @@ export const welcome = () => {
   });
 
   console.log(coolGradient(line));
-
-  // let duck = gradient("orange", "yellow").multiline(
-  //   ["  __", "<(o )___", " ( ._> /", "  `---'"].join("\n")
-  // );
-  // console.log(duck);
 };
 
 export const help = () => {
-  // let coolGradient = gradient("orange", "yellow");
-  // let happy = "⊂(◉‿◉)つ";
-
-  // console.log(coolGradient(happy));
-
   console.log(
     "Usage: miale-links <path> [option]                          Example: miale-links ./some/example.md --validate"
   );
@@ -102,12 +92,6 @@ export const help = () => {
   ];
 
   console.log(table(data));
-  // console.log("😞");
-  // console.log(coolGradient(happy));
-  // console.log(coolGradient(table(data)));
-  // console.log(chalk.yellow(table(data)));
-  // console.log(chalk.yellow(table(data)));
-  // console.log(chalk.cyan(table(data)));
 };
 
 export const statsValidate = (links) => {
@@ -117,8 +101,15 @@ export const statsValidate = (links) => {
     [`${chalk.hex("#FF8800").bold("Broken Links")}`, `${brokenLinks(links)}`],
   ];
 
-  console.log("Options selected: --stats and --validate");
-  console.log(table(data));
+  console.log("Options selected: --stats and --validate\n");
+
+  const config = {
+    columns: {
+      0: { width: 15 },
+      1: { width: 2 },
+    },
+  };
+  console.log(table(data, config));
 };
 
 export const stats = (links) => {
@@ -127,11 +118,20 @@ export const stats = (links) => {
     [`${chalk.hex("#FF8800").bold("Unique Links")}`, `${uniqueLinks(links)}`],
   ];
 
-  console.log("Option selected: --stats");
-  console.log(table(data));
+  console.log("Option selected: --stats\n");
+
+  const config = {
+    columns: {
+      0: { width: 15 },
+      1: { width: 2 },
+    },
+  };
+  console.log(table(data, config));
 };
 
 export const tableLinksValidated = (links) => {
+  console.log("Option selected: --validate\n");
+
   const lista = [];
 
   let prueba;
@@ -166,6 +166,7 @@ export const tableLinksValidated = (links) => {
 };
 
 export const tableLinks = (links) => {
+  console.log("Option selected: NONE\n");
   const lista = [];
 
   let prueba;
@@ -188,3 +189,6 @@ export const tableLinks = (links) => {
   };
   console.log(table(prueba, config));
 };
+
+// Add ANSI escape codes to display text in red.
+export const errorMessage = (str) => `${chalk.redBright(str)}`;
