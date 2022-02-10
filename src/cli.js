@@ -38,17 +38,12 @@ program.name("md-links").description("CLI to check links of markdown files");
 //   "Shows the current version of the npm package 'md-links'"
 // );
 
-// ! ---------------
 program
   .argument("[ruta]") //En caso que no coloque ninguna ruta
-  .option("-s,--stats", "Muestra links totales, únicos y rotos")
-  .option("-va,--validate", "Muestra links validados (ok y statusCode)")
-  .option("-h,--help", "output help message")
-  .option(
-    "-v,--version",
-    "Shows the current version of the npm package 'md-links'"
-  );
-// ! ---------------
+  .option("-s,--stats")
+  .option("-va,--validate")
+  .option("-h,--help")
+  .option("-v,--version");
 
 program.configureOutput({
   // writeOut: (str) =>
@@ -57,7 +52,6 @@ program.configureOutput({
 
   // Output errors in red (errorMessage fn())
   outputError: (str, write) => {
-    // write(errorMessage(str));
     write(errorMessage(`✖   ${str}\n`));
     help();
   },
@@ -87,7 +81,6 @@ if (Object.keys(options).length > 2) {
   // md-links -h o --help
   if (options.help) {
     if (program.args.length >= 1) {
-      // console.log("The version of this package is 1.0.0");
       console.log(
         errorMessage(
           "\n✖  Error: It looks like you entered a path, remember that selecting the --help option will show this help\n"
@@ -104,7 +97,6 @@ if (Object.keys(options).length > 2) {
     }
     // Si tiene más de una opción seleccionada como -h -v o cualquier otra con -h
     else if (Object.keys(options).length > 1) {
-      console.log("y esto");
       console.log(
         errorMessage(
           "\n✖  Error: You've selected the --help option and another command, Enter only -h or --help for help\n"
@@ -145,8 +137,6 @@ if (Object.keys(options).length > 2) {
   // ! si no escribe ninguna opcion pero si tiene una ruta
   // md-links .some/example.md
   else if (Object.keys(options).length === 0) {
-    // console.log("no entró ninguna opcion");
-
     if (program.args.length === 0) {
       // si no escribe ninguna opcion ni una ruta
       // md-links
@@ -208,7 +198,6 @@ if (Object.keys(options).length > 2) {
           stats(links);
           handleAnswer(true);
         })
-        // .catch((err) => console.log(outputMessage(err)));
         .catch((err) => {
           console.log(`\n${outputMessage(err)}`);
           handleAnswer(false);
