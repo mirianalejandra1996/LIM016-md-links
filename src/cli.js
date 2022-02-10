@@ -58,13 +58,15 @@ if (program.args.length > 1) {
   console.log(console.log(errorMessage("Solo puede ingresar una ruta")));
   help();
 }
+// ? NUEVO EN CASO QUE HAYA ESCRITO MAS DE DOS OPCIONES
+else if (Object.keys(options).length > 2) {
+  console.log(console.log(errorMessage("Error al ingresar opciones")));
+  help();
+}
 
 // ! Si desea recibir ayuda, entonces puede escribir
 // md-links -h o --help
-if (options.help) {
-  console.log("Haz seleccionado el comando -h --help\n");
-  help();
-
+else if (options.help) {
   if (program.args.length >= 1) {
     // console.log("The version of this package is 1.0.0");
     console.log(
@@ -74,21 +76,44 @@ if (options.help) {
     );
     help();
   }
+  // Si solo tiene la opción -v
+  else if (Object.keys(options).length === 1) {
+    console.log("Haz seleccionado el comando -h --help\n");
+    help();
+  }
+  // Si tiene más de una opción seleccionada como -h -v o cualquier otra con -h
+  else if (Object.keys(options).length > 1) {
+    console.log("y esto");
+    console.log(
+      errorMessage(
+        "Error: You've selected the --help option and another command, Enter only -h or --help for help"
+      )
+    );
+    help();
+  }
 }
-
 // ! Si quiere conocer la versión del paquete
 // md-links -v o md-links --version
-if (options.version) {
-  // No puede colocar ninguna ruta (length === 0)
-  if (program.args.length === 0) {
-    console.log("The version of this package is 1.0.0");
-  } else {
+else if (options.version) {
+  // Si tiene más de una opción seleccionada como -v -s o cualquier otra con -v
+  if (Object.keys(options).length > 1) {
+    console.log(
+      errorMessage(
+        "Error: You've selected the --version option and another command, Enter only -v or --version to display the version of md-links package"
+      )
+    );
+    help();
+  } else if (program.args.length >= 1) {
     console.log(
       errorMessage(
         "Para conocer la versión solo escriba md-links -v or md-links --version"
       )
     );
     help();
+  }
+  // No puede colocar ninguna ruta (length === 0)
+  else {
+    console.log("The version of this package is 1.0.0");
   }
 }
 
@@ -113,7 +138,7 @@ else if (Object.keys(options).length === 0) {
 
 // si selecciona --stats y --validate
 // md-links .some/example.md -s -v
-if (options.stats && option.validate) {
+if (options.stats && options.validate) {
   if (program.args.length === 0) {
     // si no escribe ninguna una ruta
     // md-links -s -v
@@ -146,7 +171,7 @@ else if (options.stats) {
 
 // si selecciona solo --validate
 // md-links .some/example.md -v
-else if (options.stats) {
+else if (options.validate) {
   if (program.args.length === 0) {
     // si no escribe ninguna una ruta
     // md-links -v
@@ -155,7 +180,8 @@ else if (options.stats) {
   } else {
     mdLinks(program.args[0], { validate: true })
       .then((links) => {
-        stats(links);
+        // stats(links);
+        tableLinksValidated(links);
       })
       .catch((err) => console.log(errorMessage(err)));
   }
