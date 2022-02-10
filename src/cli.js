@@ -53,11 +53,12 @@ program
 program.configureOutput({
   // writeOut: (str) =>
   // process.stdout.write(`The version of this package is ${str}`),
-  writeErr: (str) => process.stdout.write(`\n✖  Error: ${str}\n`),
+  writeErr: (str) => process.stdout.write(`\n${str}`),
 
   // Output errors in red (errorMessage fn())
   outputError: (str, write) => {
-    write(errorMessage(str));
+    // write(errorMessage(str));
+    write(errorMessage(`✖   ${str}\n`));
     help();
   },
 });
@@ -137,6 +138,7 @@ if (Object.keys(options).length > 2) {
     // No debe colocar ninguna ruta (length === 0) para conocer la version del paquete
     else {
       console.log("\nThe version of this package is 1.0.0\n");
+      handleAnswer(false);
     }
   }
 
@@ -169,7 +171,7 @@ if (Object.keys(options).length > 2) {
     if (program.args.length === 0) {
       // si no escribe ninguna una ruta
       // md-links -s -v
-      console.log(errorMessage("\n✖  Error: Por favor ingrese una ruta\n"));
+      console.log(errorMessage("\n✖  Error: Please enter a path\n"));
       help();
       handleAnswer(false);
     } else {
@@ -194,7 +196,7 @@ if (Object.keys(options).length > 2) {
     } else if (program.args.length === 0) {
       // si no escribe ninguna una ruta
       // md-links -s
-      console.log(errorMessage("\n✖  Error: Por favor ingrese una ruta\n"));
+      console.log(errorMessage("\n✖  Error: Please enter a path\n"));
       help();
       handleAnswer(false);
     } else {
@@ -217,7 +219,7 @@ if (Object.keys(options).length > 2) {
     } else if (program.args.length === 0) {
       // si no escribe ninguna una ruta
       // md-links -v
-      console.log(errorMessage("\n✖  Error: Por favor ingrese una ruta\n"));
+      console.log(errorMessage("\n✖  Error: Please enter a path\n"));
       help();
       handleAnswer(false);
     } else
@@ -230,5 +232,12 @@ if (Object.keys(options).length > 2) {
   }
 }
 
-// console.log("este es options, ", options);
-// console.log("mira mis argumentos", program.args);
+// En caso que no ingrese ninguna opción "md-links -"
+if (!options.args) {
+  console.log(errorMessage("\n✖  Error: Please enter a path or an option\n"));
+  help();
+  handleAnswer(false);
+}
+
+console.log("este es options, ", options);
+console.log("mira mis argumentos", program.args);

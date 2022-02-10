@@ -106,6 +106,7 @@ export const help = () => {
     },
   };
   console.log(table(data, config));
+  console.log("\n");
 };
 
 export const statsValidate = (links) => {
@@ -124,6 +125,7 @@ export const statsValidate = (links) => {
     },
   };
   console.log(table(data, config));
+  console.log("\n");
 };
 
 export const stats = (links) => {
@@ -141,6 +143,7 @@ export const stats = (links) => {
     },
   };
   console.log(table(data, config));
+  console.log("\n");
 };
 
 export const tableLinksValidated = (links) => {
@@ -177,6 +180,7 @@ export const tableLinksValidated = (links) => {
     },
   };
   console.log(table(prueba, config));
+  console.log("\n");
 };
 
 export const tableLinks = (links) => {
@@ -202,6 +206,7 @@ export const tableLinks = (links) => {
     },
   };
   console.log(table(prueba, config));
+  console.log("\n");
 };
 
 // Para lanzar mensajes de salida con formato de letras amarillas
