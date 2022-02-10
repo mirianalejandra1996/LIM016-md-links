@@ -60,7 +60,7 @@ const listArchivosMD = (route) => {
       let archivo = [path.basename(route)];
       let archivoMd = filtrarMd(archivo);
       if (archivoMd.length == 0) {
-        rej(new Error("no es un archivo MD"))
+        rej(new Error("No es un archivo MD"))
       } else {
         res([route])
       }
@@ -68,7 +68,7 @@ const listArchivosMD = (route) => {
       try {
         let archivosMD = readDirectory(route)
         if (archivosMD.length == 0)
-          rej(new Error("no hay archivos en este directorio"))
+          rej(new Error("No hay archivos en este directorio"))
         else {
           res(archivosMD)
         }
@@ -122,7 +122,7 @@ const getLinks = (file, html) => {
 
 const validatelinks = (links) => {
   const linksValidados = links.map((link) => {
-    const arrFetch = fetch(link.href)
+    return fetch(link.href)
       .then((res) => {
         if (res.status >= 200 && res.status < 400) {
           return {
@@ -144,7 +144,6 @@ const validatelinks = (links) => {
           message: 'Fail'
         }
       })
-    return arrFetch
   })
   return Promise.all(linksValidados)
 }
@@ -152,8 +151,7 @@ const validatelinks = (links) => {
 
 const listLinks = (path) => {
   const absolutePath = convertirAbsoluta(path);
-  const listPatharchivosMD = listArchivosMD(absolutePath)
-  return listPatharchivosMD
+  return listArchivosMD(absolutePath)
     .then((files) => {
       let arrLinksObj = []
       files.forEach((file) => {

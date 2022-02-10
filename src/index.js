@@ -8,19 +8,24 @@ const mdlinks = (path, option) => {
   return new Promise((res, rej) => {
     if (api.rutaExiste(path)) {
       if (option == undefined || option.validate == false) {
-        api.listLinks(path).then((links) => {
-          res(links)
-        })
+        api.listLinks(path)
+        .then((links) =>  res(links))
+        .catch((error) => rej(error))
       } else {
-        api.listLinks(path).then((links) => {
-          api.validatelinks(links)
-            .then((linksValidados) => {
-              res(linksValidados)
-            })
-        })
+        //CALLBACK HELL : NO HACER ESTO
+        // api.listLinks(path)
+        // .then((links) => {
+        //   api.validatelinks(links)
+        //   .then((linksValidados) => {
+        //       res(linksValidados)
+        //     })
+        // })
+        api.listLinks(path)
+        .then((links) => api.validatelinks(links))
+        .then((linksValidados) => res(linksValidados))
       }
     } else {
-      res("la ruta no existe");
+      rej(new Error("La ruta no existe"));
     }
   })
 };
