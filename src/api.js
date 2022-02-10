@@ -13,10 +13,6 @@ const rutaExiste = (route) => {
   return fs.existsSync(route);
 };
 
-const rutaAbsoluta = (route) => {
-  return path.isAbsolute(route);
-};
-
 const convertirAbsoluta = (route) => {
   return path.resolve(route);
 };
@@ -65,16 +61,12 @@ const listArchivosMD = (route) => {
         res([route])
       }
     } else {
-      try {
         let archivosMD = readDirectory(route)
         if (archivosMD.length == 0)
           rej(new Error("No hay archivos en este directorio"))
         else {
           res(archivosMD)
         }
-      } catch (error) {
-        rej(error)
-      }
     }
   })
 };
@@ -167,7 +159,6 @@ const listLinks = (path) => {
 
 module.exports = {
   rutaExiste,
-  rutaAbsoluta,
   convertirAbsoluta,
   listArchivosMD,
   readDirectory,
