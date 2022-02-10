@@ -55,9 +55,14 @@ export const welcome = () => {
 };
 
 export const help = () => {
-  console.log(
-    "Usage: miale-links <path> [option]                          Example: miale-links ./some/example.md --validate"
-  );
+  console.log(`
+    "Usage: miale-links <path> [option]"                   Example: miale-links --help
+                                                           Example: miale-links --version
+                                                           Example: miale-links ./some/example.md --validate
+                                                           Example: miale-links ./some/example.md --stats
+                                                           Example: miale-links ./some/example.md --stats --validate
+                                                           Example: miale-links ./some/example.md 
+  `);
 
   const data = [
     [
@@ -66,13 +71,7 @@ export const help = () => {
       `${chalk.hex("#FF8800").bold("DESCRIPTION")}`,
     ],
     ["--help", "-h", "Use to display this help"],
-    [
-      "--validate",
-      "-va",
-      "Use to display a list of extra link information (StatusCode, and Ok or Fail)",
-    ],
     ["--version", "-v", "Use to display the version of md-links package"],
-    ["--help", "-h", "Use to display this help"],
     [
       "--validate",
       "-va",
