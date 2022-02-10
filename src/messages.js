@@ -162,13 +162,13 @@ export const tableLinksValidated = (links) => {
     ];
   });
 
-  prueba[0] = [
+  prueba.unshift([
     `${chalk.hex("#FF8800").bold("Text")}`,
     `${chalk.hex("#FF8800").bold("URL")}`,
     `${chalk.hex("#FF8800").bold("File's path where link\nwas found")}`,
     `${chalk.hex("#FF8800").bold("Status\nCode")}`,
     `${chalk.hex("#FF8800").bold("Message")}`,
-  ];
+  ]);
 
   const config = {
     columns: {
@@ -192,11 +192,11 @@ export const tableLinks = (links) => {
     return [link.text.slice(0, 51), link.href, link.file];
   });
 
-  prueba[0] = [
+  prueba.unshift([
     `${chalk.hex("#FF8800").bold("Text")}`,
     `${chalk.hex("#FF8800").bold("URL")}`,
     `${chalk.hex("#FF8800").bold("File's path where link\nwas found")}`,
-  ];
+  ]);
 
   const config = {
     columns: {

@@ -90,7 +90,7 @@ if (Object.keys(options).length > 2) {
       // console.log("The version of this package is 1.0.0");
       console.log(
         errorMessage(
-          "\n✖  Error:Parece que ingresaste una ruta, recuerda que al seleccionar la opción --help mostrará this help\n"
+          "\n✖  Error: It looks like you entered a path, remember that selecting the --help option will show this help\n"
         )
       );
       help();
@@ -121,7 +121,7 @@ if (Object.keys(options).length > 2) {
     if (Object.keys(options).length > 1) {
       console.log(
         errorMessage(
-          "\n✖  Error: You've selected the --version option and another command, Enter only -v or --version to display the version of this md-links package\n"
+          "\n✖  Error: You've selected the --version option and another command, Enter only -v or --version to display the version\nof this md-links package\n"
         )
       );
       help();
@@ -161,7 +161,10 @@ if (Object.keys(options).length > 2) {
           tableLinks(links);
           handleAnswer(true);
         })
-        .catch((err) => console.log(outputMessage(err)));
+        .catch((err) => {
+          console.log(`\n${outputMessage(err)}`);
+          handleAnswer(false);
+        });
     }
   }
 
@@ -205,7 +208,11 @@ if (Object.keys(options).length > 2) {
           stats(links);
           handleAnswer(true);
         })
-        .catch((err) => console.log(outputMessage(err)));
+        // .catch((err) => console.log(outputMessage(err)));
+        .catch((err) => {
+          console.log(`\n${outputMessage(err)}`);
+          handleAnswer(false);
+        });
     }
   }
 
@@ -228,16 +235,20 @@ if (Object.keys(options).length > 2) {
           tableLinksValidated(links);
           handleAnswer(true);
         })
-        .catch((err) => console.log(outputMessage(err)));
+        // .catch((err) => console.log(outputMessage(err)));
+        .catch((err) => {
+          console.log(`\n${outputMessage(err)}`);
+          handleAnswer(false);
+        });
   }
 }
 
 // En caso que no ingrese ninguna opción "md-links -"
-if (!options.args) {
+if (!program.args) {
   console.log(errorMessage("\n✖  Error: Please enter a path or an option\n"));
   help();
   handleAnswer(false);
 }
 
-console.log("este es options, ", options);
-console.log("mira mis argumentos", program.args);
+// console.log("Opciones seleccionadas, ", options);
+// console.log("Argumentos seleccionados", program.args);
