@@ -12,11 +12,13 @@ const argv =
       type: "boolean",
       alias: "v",
       name: 'validate',
-      describe: 'valida los links'
+      describe: 'validate links'
     },
     stats: {
       type: "boolean",
-      alias: "s"
+      alias: "s",
+      name: 'stats',
+      describe: "give stats about links"
     }
   })
   .strictOptions(true)
@@ -25,9 +27,8 @@ const argv =
 
 let path = (argv._)
 
-
 if (path.length > 1) {
-  msg.errorMensaje('Ingrese una sola ruta')
+  msg.errorMensaje('Input only one path')
 } else {
   if (argv.validate && argv.stats) {
     mdlinks(path[0], {
@@ -38,7 +39,7 @@ if (path.length > 1) {
         const broken = stats.broken(data)
         msg.statsAndValidate(total, unique, broken)
       })
-      .catch((error) => msg.errorMensaje(error.message))
+      .catch((error) => msg.errorMenssage(error.message))
   } else if (argv.stats) {
     mdlinks(path[0], {
       validate: true

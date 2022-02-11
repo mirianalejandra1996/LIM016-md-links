@@ -1,6 +1,6 @@
 const chalk = require('chalk');
 
-const errorMensaje =(err) => {
+const errorMenssage =(err) => {
   console.log(chalk.redBright('┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼',
     '\n┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼▄▀▀▀▄▄▄▄▄▄▄▀▀▀▄┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼',
     '\n┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼█▒▒░░░░░░░░░▒▒█┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼',
@@ -16,7 +16,6 @@ const errorMensaje =(err) => {
     '\nError : ', `${err}`,
     '\n----------------------------------------------------------------------'))
 }
-
 
 const mdlinksCompletedValidate = (links) => {
   if(links.length === 0){
@@ -156,6 +155,6 @@ module.exports = {
   mdlinksCompleted,
   mdlinksCompletedValidate,
   stats,
-  errorMensaje,
+  errorMenssage,
   statsAndValidate
 }
