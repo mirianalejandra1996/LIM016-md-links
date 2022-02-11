@@ -43,16 +43,16 @@ const mdlinksCompletedValidate = (links) => {
   
       console.log(
         chalk.yellowBright('♥'),
-        chalk.blueBright(link.file),
+        chalk.blueBright('File: ',link.file),
         '\n',
         chalk.yellowBright('♥'),
-        chalk.whiteBright(link.text),
+        chalk.whiteBright('Title: ',link.text),
         '\n',
         chalk.yellowBright('♥'),
-        chalk.magentaBright(link.href),
+        chalk.magentaBright('Link: ',link.href),
         '\n',
         chalk.yellowBright('♥'),
-        chalk.cyanBright(link.status),
+        chalk.cyanBright('Status: ',link.status),
         (estado),
         chalk.yellowBright('\n------------------------------------------------------------------------------------------------'))
   
@@ -80,13 +80,13 @@ const mdlinksCompleted = (links) => {
   links.map((link) => {
     console.log(
       chalk.yellowBright('♥'),
-      chalk.blueBright(link.file),
+      chalk.blueBright('File: ',link.file),
       '\n',
       chalk.yellowBright('♥'),
-      chalk.whiteBright(link.text),
+      chalk.whiteBright('Title: ',link.text),
       '\n',
       chalk.yellowBright('♥'),
-      chalk.magentaBright(link.href),
+      chalk.magentaBright('Link: ',link.href),
       chalk.yellowBright('\n------------------------------------------------------------------------------------------------'))
 
   })}

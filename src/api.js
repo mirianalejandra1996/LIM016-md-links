@@ -157,5 +157,5 @@ module.exports = {
   dataToHtml,
   getLinks,
   listLinks,
-  validateLinks,
+  validateLinks
 };

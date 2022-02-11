@@ -9,7 +9,7 @@ const mdLinks = (path, option) => {
         .catch((error) => rej(error))
       } else {
         api.listLinks(path)
-        .then((links) => api.validatelinks(links))
+        .then((links) => api.validateLinks(links))
         .then((linksValidados) => res(linksValidados))
       }
     } else {
