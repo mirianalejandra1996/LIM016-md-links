@@ -56,14 +56,14 @@ const listFilesMD = (route) => {
       let file = [path.basename(route)];
       let fileMD = filterMD(file);
       if (fileMD.length == 0) {
-        rej(new Error("No es un archivo MD"))
+        rej(new Error("its not a file MD"))
       } else {
         res([route])
       }
     } else {
         let filesMD = readDirectory(route)
         if (filesMD.length == 0)
-          rej(new Error("No hay archivos en este directorio"))
+          rej(new Error("theres no files in this directory"))
         else {
           res(filesMD)
         }
