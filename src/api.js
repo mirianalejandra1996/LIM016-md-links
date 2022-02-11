@@ -9,11 +9,11 @@ const {
 const fetch = require('node-fetch');
 
 
-const rutaExiste = (route) => {
+const ExistPath = (route) => {
   return fs.existsSync(route);
 };
 
-const convertirAbsoluta = (route) => {
+const toAbsolute = (route) => {
   return path.resolve(route);
 };
 
@@ -28,67 +28,61 @@ const readdirsync = (route) => {
 //funcion asyncrona recursiva
 const readDirectory = (route) => {
   const items = readdirsync(route);
-  const itemsConPath = items.map((archivoMd) => path.resolve(route, archivoMd));
-  const archivosMD = filtrarMd(itemsConPath);
-  const folders = itemsConPath.filter(isDirectory);
+  const itemsWithPath = items.map((archivoMd) => path.resolve(route, archivoMd));
+  const filesMD = filterMD(itemsWithPath);
+  const folders = itemsWithPath.filter(isDirectory);
 
   if (folders.length > 0) {
-    const archivosEnArrays = folders.map((folder) => readDirectory(folder));
+    const ArrayOfFiles = folders.map((folder) => readDirectory(folder));
     //  let archivosEnArrays =  Promise.all(promises);
-    let archivosAplanados = archivosEnArrays.flat();
+    let flatFiles = ArrayOfFiles.flat();
 
-    archivosMD.push(...archivosAplanados);
+    filesMD.push(...flatFiles);
   }
-  return archivosMD;
+  return filesMD;
 };
 
 // Filtra archivos que tenga extension .md
-const filtrarMd = (archivos) => {
-  return archivos.filter((archivo) => {
-    return path.extname(archivo) == ".md";
+const filterMD = (files) => {
+  return files.filter((file) => {
+    return path.extname(file) == ".md";
   });
 };
 
-const listArchivosMD = (route) => {
+const listFilesMD = (route) => {
   return new Promise((res, rej) => {
-    let esArchivo = isFile(route);
-    if (esArchivo) {
-      let archivo = [path.basename(route)];
-      let archivoMd = filtrarMd(archivo);
-      if (archivoMd.length == 0) {
+    let fileExist = isFile(route);
+    if (fileExist) {
+      let file = [path.basename(route)];
+      let fileMD = filterMD(file);
+      if (fileMD.length == 0) {
         rej(new Error("No es un archivo MD"))
       } else {
         res([route])
       }
     } else {
-        let archivosMD = readDirectory(route)
-        if (archivosMD.length == 0)
+        let filesMD = readDirectory(route)
+        if (filesMD.length == 0)
           rej(new Error("No hay archivos en este directorio"))
         else {
-          res(archivosMD)
+          res(filesMD)
         }
     }
   })
 };
 
-
-
-// lee el directorio asyncronamente
+// READ THE DIRECTPRY ASYNC 
 // const readDirPromise = (route) =>
 //   new Promise((resolve, reject) => {
-//     fs.readdir(route, (err, archivos) => {
+//     fs.readdir(route, (err, files) => {
 //       if (err) {
 //         reject(err);
 //       } else {
-//         resolve(archivos);
+//         resolve(files);
 //       }
 //     });
 //   });
 
-
-
-
-// Devuelve la data del los archivos MD syncronamnete xd
 const readFiles = (file) => {
   return fs.readFileSync(file, 'utf-8')
 }
@@ -111,9 +105,8 @@ const getLinks = (file, html) => {
   return links
 }
 
-
-const validatelinks = (links) => {
-  const linksValidados = links.map((link) => {
+const validateLinks = (links) => {
+  const linksWithValidation = links.map((link) => {
     return fetch(link.href)
       .then((res) => {
         if (res.status >= 200 && res.status < 400) {
@@ -132,18 +125,17 @@ const validatelinks = (links) => {
       }).catch(() => {
         return {
           ...link,
-          status: 'No responde',
+          status: 'Doesnt Respond',
           message: 'Fail'
         }
       })
   })
-  return Promise.all(linksValidados)
+  return Promise.all(linksWithValidation)
 }
 
-
 const listLinks = (path) => {
-  const absolutePath = convertirAbsoluta(path);
-  return listArchivosMD(absolutePath)
+  const absolutePath = toAbsolute(path);
+  return listFilesMD(absolutePath)
     .then((files) => {
       let arrLinksObj = []
       files.forEach((file) => {
@@ -155,16 +147,15 @@ const listLinks = (path) => {
     })
 }
 
-
-
 module.exports = {
-  rutaExiste,
-  convertirAbsoluta,
-  listArchivosMD,
+  ExistPath,
+  toAbsolute,
+  listFilesMD,
+  filterMD,
   readDirectory,
   readFiles,
   dataToHtml,
   getLinks,
   listLinks,
-  validatelinks,
+  validateLinks,
 };
