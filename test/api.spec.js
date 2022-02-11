@@ -4,17 +4,17 @@ const path = require("path");
 describe('Path Exist Function', () => {
 
   it('should return true si existe ...', () => {
-    expect(api.rutaExiste('test/test-folder')).toBe(true)
+    expect(api.ExistPath('test/test-folder')).toBe(true)
   });
   it('should return false si no existe ...', () => {
-    expect(api.rutaExiste('Path')).toBe(false)
+    expect(api.ExistPath('Path')).toBe(false)
   });
 });
 
 describe('Path to Absolute Function', () => {
 
   it('should return la ruta absoluta ...', () => {
-    expect(api.convertirAbsoluta('test/test-folder')).toBe('/Users/lucero/Projectos/LIM016-md-links/test/test-folder')
+    expect(api.toAbsolute('test/test-folder')).toBe('/Users/lucero/Projectos/LIM016-md-links/test/test-folder')
   });
 });
 
@@ -26,16 +26,16 @@ describe('Read Directory Function', () => {
   });
 });
 
-describe('ListArchivosMD Function', () => {
+describe('ListFilesMD Function', () => {
   it('should return an error if folder is empty', () => {
     expect.assertions(1);
-    return api.listArchivosMD('test/test-folder/directoriovacio').catch(e =>
+    return api.listFilesMD('test/test-folder/directoriovacio').catch(e =>
       expect(e).toEqual(new Error("No hay archivos en este directorio")),
     );
   });
   it('should return an error if folder is not MD ', () => {
     expect.assertions(1);
-    return api.listArchivosMD('test/test-folder/archivo2.txt').catch(e =>
+    return api.listFilesMD('test/test-folder/archivo2.txt').catch(e =>
       expect(e).toEqual((new Error("No es un archivo MD"))),
     );
   });
@@ -44,7 +44,7 @@ describe('ListArchivosMD Function', () => {
       path.resolve('test/test-folder/directorio/archivo1.md')
     ]
     const absolutePath = path.resolve('test/test-folder/directorio/archivo1.md')
-    expect(api.listArchivosMD(absolutePath)).resolves.toEqual(expectedArray)
+    expect(api.listFilesMD(absolutePath)).resolves.toEqual(expectedArray)
   });
   it('should return an array with files MD ', () => {
     const expectedArray = [
@@ -52,7 +52,7 @@ describe('ListArchivosMD Function', () => {
       path.resolve('test/test-folder/directorio/archivo2.md')
     ]
     const absolutePath = path.resolve('test/test-folder/directorio')
-    expect(api.listArchivosMD(absolutePath)).resolves.toEqual(expectedArray)
+    expect(api.listFilesMD(absolutePath)).resolves.toEqual(expectedArray)
   });
 });
 
