@@ -87,10 +87,6 @@ const readFiles = (file) => {
   return fs.readFileSync(file, 'utf-8')
 }
 
-const dataToHtml = (data) => {
-  return md.render(data);
-}
-
 const getLinks = (file, html) => {
   let links = []
   let dom = new JSDOM(html)
@@ -109,13 +105,14 @@ const validateLinks = (links) => {
   const linksWithValidation = links.map((link) => {
     return fetch(link.href)
       .then((res) => {
+       // console.log(res)
         if (res.status >= 200 && res.status < 400) {
           return {
             ...link,
             status: res.status,
             message: res.statusText
           }
-        } else if (res.status >= 400 && res.status <= 500) {
+        } else {
           return {
             ...link,
             status: res.status,
@@ -140,7 +137,7 @@ const listLinks = (path) => {
       let arrLinksObj = []
       files.forEach((file) => {
         const data = readFiles(file)
-        let markDown = dataToHtml(data)
+        let markDown = md.render(data)
         arrLinksObj.push(...getLinks(file, markDown))
       })
       return arrLinksObj
@@ -154,7 +151,6 @@ module.exports = {
   filterMD,
   readDirectory,
   readFiles,
-  dataToHtml,
   getLinks,
   listLinks,
   validateLinks

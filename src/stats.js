@@ -14,7 +14,6 @@ const unique = (links) => {
   });
   const totalUnique = Object.keys(visitados).length
   // const linksNoRepetido = links.filter((link) => visitados[link.link] == 1)
-
   return totalUnique
 }
 

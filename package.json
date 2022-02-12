@@ -18,7 +18,7 @@
     "path"
   ],
   "license": "MIT",
-  "main": "./api.js",
+  "main": "./src/api.js",
   "bin": {
     "md-links": "./src/cli.js"
   },
