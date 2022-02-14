@@ -2,11 +2,12 @@ import {
   convertPathAbsolute,
   isValidatedPath,
   getAllFilesRecursively,
-  extractedLinks,
   validatedLinks,
   getMDFiles,
+  listOfLinks,
 } from "./mdFunctions.js";
 
+// ! -------------------------------------------------------------------------------
 const mdLinks = (path, options) => {
   return new Promise((resolve, reject) => {
     if (!isValidatedPath(path)) {
@@ -20,40 +21,33 @@ const mdLinks = (path, options) => {
         reject("No existe ningún archivo en la ruta ingresada");
       } else {
         const mdFiles = getMDFiles(allFiles);
-
+        // console.log("miraaaaa mis MDFILES , ", mdFiles);
         if (mdFiles.length === 0) {
           reject("No existen archivos MD en la ruta ingresada");
         } else {
-          const getlinks = mdFiles.map((file) =>
-            extractedLinks(file)
-              .then((res) => res)
-              .catch((err) => err)
-          );
+          // console.log("doka", mdFiles);
 
-          Promise.all(getlinks)
-            .then((links) => {
-              return links.flat().filter((link) => typeof link === "object");
-            })
-            .then((data) => {
-              // console.log("esto es lo que tengo antes de validar", data);
-              if (options.validate) {
-                return validatedLinks(data);
-              }
+          const links = [];
+          mdFiles.forEach((file) => {
+            links.push(...listOfLinks(file));
+          });
 
-              return data;
-            })
-            .then((valLinks) => {
-              return valLinks.length === 0
-                ? reject("No existen links en la ruta ingresada")
-                : resolve(valLinks);
-            })
-            .catch((err) => console.log(err));
+          if (links.length === 0) {
+            reject("No existen links en la ruta ingresada");
+          } else {
+            if (options.validate) {
+              resolve(validatedLinks(links));
+            } else {
+              resolve(links);
+            }
+          }
         }
       }
     }
   });
 };
 
+// ! -----------------------------------------------------------------------------------------
 // C:\Users\Miria\Desktop\MD-LINKS\LIM016-md-links\test\Archivos\filejs.js
 // console.log(convertPathAbsolute("../test/Archivos"));
 // // mdLinks("../test/Archivo23s")
@@ -67,6 +61,10 @@ const mdLinks = (path, options) => {
 // mdLinks("../test/Archivos/prueba", { validate: true })
 //   // mdLinks("../test/Archivos", { validate: true })
 //   // mdLinks('../test/rutaInexistente', { validate: true })
+// mdLinks("./test/Archivos", { validate: true })
+// mdLinks("./test/Archivos/emptymd.md", { validate: true })
+// mdLinks("./test/Archivos/filemd2.md", { validate: true })
+// mdLinks("./test/Archivos", { validate: false })
 // .then((res) => console.log(res))
 // .catch((err) => console.log(err));
 

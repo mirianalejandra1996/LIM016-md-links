@@ -5,9 +5,51 @@ import path from "path";
 import fetch from "node-fetch";
 
 // Verifica si la ruta existe
-const isValidatedPath = (directory) => fs.existsSync(directory);
+export const isValidatedPath = (directory) => fs.existsSync(directory);
+// console.log(
+//   isValidatedPath(
+//     "C:\\Users\\Miria\\Desktop\\MD-LINKS\\LIM016-md-links\\test\\Archivos\\filemd2.md"
+//   )
+// );
 
-const readLinks = (fileContent, filePath) => {
+// Verificamos si la ruta es una carpeta
+const pathIsDirectory = (route) => {
+  const statsObj = fs.lstatSync(route);
+  return statsObj.isDirectory();
+};
+
+// Verificamos si la ruta es un archivo
+export const pathIsFile = (route) => {
+  const statsObj = fs.lstatSync(route);
+  return statsObj.isFile();
+};
+
+// const isPathAbsolute = (url) => path.isAbsolute(url);
+
+// Verificamos si la ruta es absoluta
+export const convertPathAbsolute = (url) =>
+  !path.isAbsolute(url) ? path.resolve(url) : url;
+// !isPathAbsolute(ruta) ? path.resolve(ruta) : ruta;
+
+console.log(convertPathAbsolute("./test/Archivos/filemd2.md"));
+// console.log(convertPathAbsolute("./"));
+
+// fs.readFileSync : Metodo Síncrono que se encarga de leer el contenido de un archivo específico
+const readFile = (file) => {
+  return fs.readFileSync(file, "utf-8");
+};
+
+console.log(
+  readFile(
+    "C:\\Users\\Miria\\Desktop\\MD-LINKS\\LIM016-md-links\\test\\Archivos\\filemd2.md"
+  )
+);
+
+export const listOfLinks = (path) => {
+  const absolutePath = convertPathAbsolute(path);
+
+  const fileContent = readFile(absolutePath);
+
   const regexMdLinks = /\[([^\[]+)\](\(.*\))/gm;
 
   const matches = fileContent.match(regexMdLinks);
@@ -22,80 +64,35 @@ const readLinks = (fileContent, filePath) => {
     links.push({
       text: text[1],
       href: text[2],
-      file: filePath,
+      file: absolutePath,
     });
   }
 
   return links;
 };
 
-// fs.readFile : Metodo Asincrono que se encarga de leer el contenido de un archivo específico
-// extractedLinks extrae en un array los links de un archivo
-const extractedLinks = (file) => {
-  console.log("fileeeeeeeeeee, ", file);
-  return new Promise((resolve, reject) => {
-    fs.readFile(file, "utf-8", (err, content) => {
-      if (err) reject("Problemas en lectura de archivo, ", err);
+// console.log("por favor", listOfLinks("./test/Archivos/filemd.md"));
+// console.log("por favor", listOfLinks("./test/Archivos/emptymd.md"));
+// console.log("por favor", listOfLinks("./test/Archivos/filemd2.md"));
 
-      // const lines = content.toString();
-      const links = readLinks(lines, file);
-
-      if (links.length === 0) {
-        return reject("no link in this file");
-      }
-      console.log("yooooooooooooooo", links);
-      resolve(links);
-    });
-  });
-};
-
-console.log(
-  extractedLinks(
-    "C:UsersMiriaDesktopMD-LINKSLIM016-md-links\\testArchivos\\filemd2.md"
-  ).then((res) => console.log(res))
-);
-// console.log(extractedLinks("../test/Archivos/filemd2.md"));
-
-// console.log("../test/Archivos/filemd2.md");
-
-// Verificamos si la ruta es absoluta
-const isPathAbsolute = (url) => path.isAbsolute(url);
-
-// Verificamos si la ruta es una carpeta
-const pathIsDirectory = (route) => {
-  // With lstatSync or lstat (Asyncronous method) I can  get the details (information)
-  // of a symbolic link to a file.
-  const statsObj = fs.lstatSync(route);
-  return statsObj.isDirectory();
-};
-
-// Verificamos si la ruta es un archivo
-const pathIsFile = (route) => {
-  const statsObj = fs.lstatSync(route);
-  return statsObj.isFile();
-};
-
-const convertPathAbsolute = (ruta) =>
-  !isPathAbsolute(ruta) ? path.resolve(ruta) : ruta;
-
-const validatedLink = (link) => {
-  return new Promise((resolve, reject) => {
+export const validatedLink = (link) => {
+  return new Promise((resolve) => {
     fetch(link.href)
       .then((response) => {
-        (link.statusCode = response.status), (link.message = "Ok");
+        link.statusCode = response.status;
+        link.message = "Ok";
         resolve(link);
       })
       .catch((err) => {
-        (link.statusCode = 404), (link.message = "Fail");
+        link.statusCode = 404;
+        link.message = "Fail";
         resolve(link);
       });
-
-    if (!link) reject("No links found");
   });
 };
 
-const validatedLinks = (links) => {
-  return new Promise((resolve, reject) => {
+export const validatedLinks = (links) => {
+  return new Promise((resolve) => {
     // es un array de promesas
     const newLinks = [];
 
@@ -107,12 +104,12 @@ const validatedLinks = (links) => {
   });
 };
 
-const getMDFiles = (files) => {
+export const getMDFiles = (files) => {
   const mdFiles = files.filter((file) => path.extname(file) === ".md");
   return mdFiles.length > 0 ? mdFiles : [];
 };
 
-const getAllFilesRecursively = (ruta) => {
+export const getAllFilesRecursively = (ruta) => {
   let filesArr = [];
   // Si la ruta es un archivo lo pushea en mi array
   if (pathIsFile(ruta)) {
@@ -127,17 +124,4 @@ const getAllFilesRecursively = (ruta) => {
   });
 
   return filesArr.flat();
-};
-
-export {
-  isValidatedPath,
-  readLinks,
-  extractedLinks,
-  isPathAbsolute,
-  pathIsFile,
-  convertPathAbsolute,
-  validatedLink,
-  validatedLinks,
-  getMDFiles,
-  getAllFilesRecursively,
 };
