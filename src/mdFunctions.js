@@ -32,21 +32,31 @@ const readLinks = (fileContent, filePath) => {
 // fs.readFile : Metodo Asincrono que se encarga de leer el contenido de un archivo específico
 // extractedLinks extrae en un array los links de un archivo
 const extractedLinks = (file) => {
+  console.log("fileeeeeeeeeee, ", file);
   return new Promise((resolve, reject) => {
-    fs.readFile(file, (err, content) => {
+    fs.readFile(file, "utf-8", (err, content) => {
       if (err) reject("Problemas en lectura de archivo, ", err);
 
-      const lines = content.toString();
+      // const lines = content.toString();
       const links = readLinks(lines, file);
 
       if (links.length === 0) {
         return reject("no link in this file");
       }
-      // console.log(links)
+      console.log("yooooooooooooooo", links);
       resolve(links);
     });
   });
 };
+
+console.log(
+  extractedLinks(
+    "C:UsersMiriaDesktopMD-LINKSLIM016-md-links\\testArchivos\\filemd2.md"
+  ).then((res) => console.log(res))
+);
+// console.log(extractedLinks("../test/Archivos/filemd2.md"));
+
+// console.log("../test/Archivos/filemd2.md");
 
 // Verificamos si la ruta es absoluta
 const isPathAbsolute = (url) => path.isAbsolute(url);
