@@ -6,10 +6,10 @@ const totalLinks = (links) => {
 const unique = (links) => {
   visitados = {}
   links.forEach(elem => {
-    if (visitados[elem.link]) {
-      visitados[elem.link] += 1
+    if (visitados[elem.href]) {
+      visitados[elem.href] += 1
     } else {
-      visitados[elem.link] = 1
+      visitados[elem.href] = 1
     }
   });
   const totalUnique = Object.keys(visitados).length

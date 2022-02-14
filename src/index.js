@@ -11,6 +11,7 @@ const mdLinks = (path, option) => {
         api.listLinks(path)
         .then((links) => api.validateLinks(links))
         .then((linksValidados) => res(linksValidados))
+        .catch((error) => rej(error))
       }
     } else {
       rej(new Error("The path doesnt exist"));

@@ -23,12 +23,13 @@ const argv =
   })
   .strictOptions(true)
   .showHelpOnFail(false, msg.helpMDLinks())
+  .help(msg.helpMDLinks())
   .argv
 
 let path = (argv._)
 
 if (path.length > 1) {
-  msg.errorMensaje('Input only one path')
+  msg.errorMessage('Input only one path')
 } else {
   if (argv.validate && argv.stats) {
     mdlinks(path[0], {
@@ -39,7 +40,7 @@ if (path.length > 1) {
         const broken = stats.broken(data)
         msg.statsAndValidate(total, unique, broken)
       })
-      .catch((error) => msg.errorMenssage(error.message))
+      .catch((error) => msg.errorMessage(error.message))
   } else if (argv.stats) {
     mdlinks(path[0], {
       validate: true
@@ -48,20 +49,20 @@ if (path.length > 1) {
       const unique = stats.unique(data)
       msg.stats(total, unique)
     })
-    .catch((error) => msg.errorMensaje(error.message))
+    .catch((error) => msg.errorMessage(error.message))
   } else if (argv.validate) {
     mdlinks(path[0], {
       validate: true
     }).then((data) => {
       msg.mdlinksCompletedValidate(data)
     })
-    .catch((error) => msg.errorMensaje(error.message))
-  } else {
+    .catch((error) => msg.errorMessage(error.message))
+  }else {
     mdlinks(path[0], {
         validate: false
       }).then((data) => {
         msg.mdlinksCompleted(data)
       })
-      .catch((error) => msg.errorMensaje(error.message))
+      .catch((error) => msg.errorMessage(error.message))
   }
 }

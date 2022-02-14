@@ -63,7 +63,7 @@ const listFilesMD = (route) => {
     } else {
         let filesMD = readDirectory(route)
         if (filesMD.length == 0)
-          rej(new Error("theres no files in this directory"))
+          rej(new Error("theres no files MD in this directory"))
         else {
           res(filesMD)
         }

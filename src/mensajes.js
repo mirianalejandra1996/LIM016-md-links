@@ -1,6 +1,6 @@
 const chalk = require('chalk');
 
-const errorMenssage =(err) => {
+const errorMessage =(err) => {
   console.log(chalk.redBright('┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼',
     '\n┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼▄▀▀▀▄▄▄▄▄▄▄▀▀▀▄┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼',
     '\n┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼█▒▒░░░░░░░░░▒▒█┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼',
@@ -127,7 +127,7 @@ const stats = (total, unique) => {
     '\n┼┼┼┼┼┼┼                                                        ┼┼┼┼┼┼┼',
     '\n┼┼┼┼┼┼┼                          STATS                         ┼┼┼┼┼┼┼',
     '\n┼┼┼┼┼┼┼                                                        ┼┼┼┼┼┼┼',
-    '\n┼┼┼┼┼┼┼                       Total  :', `${chalk.yellowBright(total)}`, '                      ┼┼┼┼┼┼┼',
+    '\n┼┼┼┼┼┼┼                       Total  :', `${chalk.yellowBright(total)}`, '                     ┼┼┼┼┼┼┼',
     '\n┼┼┼┼┼┼┼                       Unique :', `${chalk.yellowBright(unique)}`, '                      ┼┼┼┼┼┼┼',
     '\n┼┼┼┼┼┼┼                                                        ┼┼┼┼┼┼┼',
     '\n┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼'))
@@ -143,7 +143,7 @@ const statsAndValidate = (total, unique, broken) => {
     '\n┼┼┼┼┼┼┼                                                        ┼┼┼┼┼┼┼',
     '\n┼┼┼┼┼┼┼                     STATS Y VALIDATE                   ┼┼┼┼┼┼┼',
     '\n┼┼┼┼┼┼┼                                                        ┼┼┼┼┼┼┼',
-    '\n┼┼┼┼┼┼┼                       Total  :', `${chalk.yellowBright(total)}`, '                      ┼┼┼┼┼┼┼',
+    '\n┼┼┼┼┼┼┼                       Total  :', `${chalk.yellowBright(total)}`, '                     ┼┼┼┼┼┼┼',
     '\n┼┼┼┼┼┼┼                       Unique :', `${chalk.yellowBright(unique)}`, '                      ┼┼┼┼┼┼┼',
     '\n┼┼┼┼┼┼┼                       Broken :', `${chalk.redBright(broken)}`, '                      ┼┼┼┼┼┼┼',
     '\n┼┼┼┼┼┼┼                                                        ┼┼┼┼┼┼┼',
@@ -155,6 +155,6 @@ module.exports = {
   mdlinksCompleted,
   mdlinksCompletedValidate,
   stats,
-  errorMenssage,
+  errorMessage,
   statsAndValidate
 }
