@@ -28,8 +28,6 @@ export const readFile = (file) => {
   return fs.readFileSync(file, "utf-8");
 };
 
-
-
 export const listOfLinks = (path) => {
   const absolutePath = convertPathAbsolute(path);
 
@@ -76,7 +74,17 @@ export const validatedLink = (link) => {
   });
 };
 
+// const obj = {
+//   text: "Markdown",
+//   href: "https://es.wikipedia.org/wiki/Markdown",
+//   file: "C:\\Users\\Miria\\Desktop\\MD-LINKS\\LIM016-md-links\\test\\Archivos\\filemd.md",
+// };
+
+// validatedLink(obj).then((res) => console.log(res));
+// .catch((err) => console.log(err));
+
 export const validatedLinks = (links) => {
+  console.log("liiiiiiiiiiiiiiiinks, ", links);
   return new Promise((resolve) => {
     // es un array de promesas
     const newLinks = [];
@@ -88,6 +96,10 @@ export const validatedLinks = (links) => {
       .catch((err) => err);
   });
 };
+
+// console.log("por favor", listOfLinks("./test/Archivos/filemd.md"));
+// console.log("por favor", listOfLinks("./test/Archivos/emptymd.md"));
+// console.log("por favor", listOfLinks("./test/Archivos/filemd2.md"));
 
 export const getMDFiles = (files) => {
   const mdFiles = files.filter((file) => path.extname(file) === ".md");
