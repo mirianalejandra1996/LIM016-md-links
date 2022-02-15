@@ -46,13 +46,13 @@ export const welcome = () => {
 
 export const help = () => {
   console.log(`
-    "Usage: miale-links <path> [option]"                   
+    "Usage: md-links <path> [option]"                   
     
-    Note: You can also use the alias command.           i.e. miale-links -h
-                                                             miale-links -v
-                                                             miale-links ./some/example.md -s
-                                                             miale-links ./some/example.md -va
-                                                             miale-links ./some/example.md -s -va
+    Note: You can also use the alias command.           i.e. md-links -h
+                                                             md-links -v
+                                                             md-links ./some/example.md -s
+                                                             md-links ./some/example.md -va
+                                                             md-links ./some/example.md -s -va
   `);
 
   const data = [
@@ -62,36 +62,36 @@ export const help = () => {
       `${chalk.hex("#FF8800").bold("DESCRIPTION")}`,
       `${chalk.hex("#FF8800").bold("EXAMPLE")}`,
     ],
-    ["--help", "-h", "Use to display this help", "miale-links --help"],
+    ["--help", "-h", "Use to display this help", "md-links --help"],
     [
       "--version",
       "-v",
       "Use to display the version of this\nmd-links package",
-      "miale-links --version",
+      "md-links --version",
     ],
     [
       "--validate",
       "-va",
       "Use to display a list of extra link\ninformation (StatusCode, and Ok or\nFail)",
-      "miale-links ./some/example.md --validate",
+      "md-links ./some/example.md --validate",
     ],
     [
       "--stats",
       "-s",
       "Use to display statistical link\ninformation (Total links and Unique\nlinks)",
-      "miale-links ./some/example.md --stats",
+      "md-links ./some/example.md --stats",
     ],
     [
       "--stats --validate",
       "-s -va",
       "Use to display statistical link\ninformation (Total links, Unique\nlinks and Broken Liks)",
-      "miale-links ./some/example.md --stats\n--validate",
+      "md-links ./some/example.md --stats\n--validate",
     ],
     [
       "Empty option",
       "",
       "Use to display a list of basic link\ninformation",
-      "miale-links ./some/example.md",
+      "md-links ./some/example.md",
     ],
   ];
 
