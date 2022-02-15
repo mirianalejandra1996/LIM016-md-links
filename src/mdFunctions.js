@@ -122,3 +122,14 @@ export const getAllFilesRecursively = (ruta) => {
 
   return filesArr.flat();
 };
+
+// console.log("por favor", getAllFilesRecursively("./test/Archivos/filemd2.md"));
+console.log("porfgdf favor", getAllFilesRecursively("./test/Archivos"));
+console.log(
+  "porfgdf favor2",
+  getAllFilesRecursively("./test/Archivos/emptyFolder")
+);
+console.log(
+  "porfgdf favor3",
+  getAllFilesRecursively("./test/Archivos/folderAB")
+);

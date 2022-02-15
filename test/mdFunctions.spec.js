@@ -7,6 +7,7 @@ import {
   listOfLinks,
   validatedLink,
   getMDFiles,
+  getAllFilesRecursively,
 } from "../src/mdFunctions";
 
 // import fetch from "node-fetch";
@@ -224,13 +225,29 @@ describe("getMDFiles function", () => {
   });
 });
 
-// [
-//   'C:\\Users\\Miria\\Desktop\\MD-LINKS\\LIM016-md-links\\test\\Archivos\\emptymd.md',
-//   'C:\\Users\\Miria\\Desktop\\MD-LINKS\\LIM016-md-links\\test\\Archivos\\filejs.js',
-//   'C:\\Users\\Miria\\Desktop\\MD-LINKS\\LIM016-md-links\\test\\Archivos\\filemd.md',
-//   'C:\\Users\\Miria\\Desktop\\MD-LINKS\\LIM016-md-links\\test\\Archivos\\filemd2.md',
-//   'C:\\Users\\Miria\\Desktop\\MD-LINKS\\LIM016-md-links\\test\\Archivos\\filemd3.md',
-//   'C:\\Users\\Miria\\Desktop\\MD-LINKS\\LIM016-md-links\\test\\Archivos\\filetext.txt',
-//   'C:\\Users\\Miria\\Desktop\\MD-LINKS\\LIM016-md-links\\test\\Archivos\\subCarpeta\\A.md',
-//   'C:\\Users\\Miria\\Desktop\\MD-LINKS\\LIM016-md-links\\test\\Archivos\\subCarpeta\\B.md'
-// ]
+describe("getAllFilesRecursively function", () => {
+  it("should return an array of files if path contains files", () => {
+    const path =
+      "C:\\Users\\Miria\\Desktop\\MD-LINKS\\LIM016-md-links\\test\\Archivos";
+
+    const filesRecursive = [
+      "C:\\Users\\Miria\\Desktop\\MD-LINKS\\LIM016-md-links\\test\\Archivos\\emptymd.md",
+      "C:\\Users\\Miria\\Desktop\\MD-LINKS\\LIM016-md-links\\test\\Archivos\\filejs.js",
+      "C:\\Users\\Miria\\Desktop\\MD-LINKS\\LIM016-md-links\\test\\Archivos\\filemd.md",
+      "C:\\Users\\Miria\\Desktop\\MD-LINKS\\LIM016-md-links\\test\\Archivos\\filemd2.md",
+      "C:\\Users\\Miria\\Desktop\\MD-LINKS\\LIM016-md-links\\test\\Archivos\\filemd3.md",
+      "C:\\Users\\Miria\\Desktop\\MD-LINKS\\LIM016-md-links\\test\\Archivos\\filetext.txt",
+      "C:\\Users\\Miria\\Desktop\\MD-LINKS\\LIM016-md-links\\test\\Archivos\\folderAB\\A.md",
+      "C:\\Users\\Miria\\Desktop\\MD-LINKS\\LIM016-md-links\\test\\Archivos\\folderAB\\B.md",
+    ];
+
+    expect(getAllFilesRecursively(path)).toEqual(filesRecursive);
+  });
+
+  it("should return an empty array if path has no files", () => {
+    const path =
+      "C:\\Users\\Miria\\Desktop\\MD-LINKS\\LIM016-md-links\\test\\Archivos\\emptyFolder";
+
+    expect(getAllFilesRecursively(path)).toEqual([]);
+  });
+});
