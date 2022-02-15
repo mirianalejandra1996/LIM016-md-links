@@ -8,7 +8,7 @@ import {
 } from "./mdFunctions.js";
 
 // ! -------------------------------------------------------------------------------
-const mdLinks = (path, options) => {
+export const mdLinks = (path, options) => {
   return new Promise((resolve, reject) => {
     if (!isValidatedPath(path)) {
       reject("La ruta ingresada no existe");
@@ -21,13 +21,13 @@ const mdLinks = (path, options) => {
         reject("No existe ningún archivo en la ruta ingresada");
       } else {
         const mdFiles = getMDFiles(allFiles);
-        // console.log("o¿OOOOOOOOOOOOOOOO", allFiles);
+        // console.log("allFiles", allFiles);
 
         console.log("miraaaaa mis MDFILES , ", mdFiles);
         if (mdFiles.length === 0) {
           reject("No existen archivos MD en la ruta ingresada");
         } else {
-          // console.log("doka", mdFiles);
+          // console.log("mdFiles", mdFiles);
 
           const links = [];
           mdFiles.forEach((file) => {
@@ -67,9 +67,6 @@ const mdLinks = (path, options) => {
 // mdLinks("./test/Archivos/emptymd.md", { validate: true })
 // mdLinks("./test/Archivos/filemd2.md", { validate: true })
 // mdLinks("./test/Archivos", { validate: false })
-mdLinks("./test/Archivos", { validate: true })
-  .then((res) => console.log(res))
-  .catch((err) => console.log(err));
-
-export { mdLinks };
-// export default mdLinks;
+// mdLinks("./test/Archivos", { validate: true })
+//   .then((res) => console.log(res))
+//   .catch((err) => console.log(err));
