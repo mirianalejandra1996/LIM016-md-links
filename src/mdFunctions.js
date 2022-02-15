@@ -6,14 +6,9 @@ import fetch from "node-fetch";
 
 // Verifica si la ruta existe
 export const isValidatedPath = (directory) => fs.existsSync(directory);
-// console.log(
-//   isValidatedPath(
-//     "C:\\Users\\Miria\\Desktop\\MD-LINKS\\LIM016-md-links\\test\\Archivos\\filemd2.md"
-//   )
-// );
 
 // Verificamos si la ruta es una carpeta
-const pathIsDirectory = (route) => {
+export const pathIsDirectory = (route) => {
   const statsObj = fs.lstatSync(route);
   return statsObj.isDirectory();
 };
@@ -24,26 +19,16 @@ export const pathIsFile = (route) => {
   return statsObj.isFile();
 };
 
-// const isPathAbsolute = (url) => path.isAbsolute(url);
-
 // Verificamos si la ruta es absoluta
 export const convertPathAbsolute = (url) =>
   !path.isAbsolute(url) ? path.resolve(url) : url;
-// !isPathAbsolute(ruta) ? path.resolve(ruta) : ruta;
-
-console.log(convertPathAbsolute("./test/Archivos/filemd2.md"));
-// console.log(convertPathAbsolute("./"));
 
 // fs.readFileSync : Metodo Síncrono que se encarga de leer el contenido de un archivo específico
-const readFile = (file) => {
+export const readFile = (file) => {
   return fs.readFileSync(file, "utf-8");
 };
 
-console.log(
-  readFile(
-    "C:\\Users\\Miria\\Desktop\\MD-LINKS\\LIM016-md-links\\test\\Archivos\\filemd2.md"
-  )
-);
+
 
 export const listOfLinks = (path) => {
   const absolutePath = convertPathAbsolute(path);
