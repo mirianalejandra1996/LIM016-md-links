@@ -23,7 +23,7 @@ export const mdLinks = (path, options) => {
         const mdFiles = getMDFiles(allFiles);
         // console.log("allFiles", allFiles);
 
-        console.log("miraaaaa mis MDFILES , ", mdFiles);
+        // console.log("miraaaaa mis MDFILES , ", mdFiles);
         if (mdFiles.length === 0) {
           reject("No existen archivos MD en la ruta ingresada");
         } else {

@@ -44,16 +44,13 @@
     "jest": "^27.5.1"
   },
   "dependencies": {
-    "ascii-emoji-parser": "^1.0.0",
     "cfonts": "^2.10.0",
     "chalk": "^5.0.0",
     "commander": "^9.0.0",
     "gradient-string": "^2.0.0",
-    "inquirer": "^8.2.0",
     "nanospinner": "^1.0.0",
     "node-fetch": "^3.2.0",
     "nodemon": "^2.0.15",
-    "ora": "^6.0.1",
     "table": "^6.8.0"
   },
   "type": "module"
