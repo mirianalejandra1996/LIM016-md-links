@@ -13,16 +13,17 @@ Esta herramienta permite:
 
 ## Tabla de contenido
 
-- [ Instalación ](#Instalación)
-- [ Guía de uso ](#Guia-de-uso)
-- [ Diagrama de flujo ](#Diagrama-de-flujo)
-- [ Dependencias adoptadas](#Dependencias-adoptadas)
-- [ Autor ](#Autor)
-- [ Fuente ](#Fuente)
+- [ Instalación ](#1-instalación)
+- [ Guía de uso ](#2-guia-de-uso)
+- [ Diagrama de flujo ](#3-diagrama-de-flujo)
+- [ Dependencias adoptadas](#4-dependencias-adoptadas)
+- [ Backlog](#5-backlog)
+- [ Autor ](#6-autor)
+- [ Fuente ](#7-fuente)
 
 ## 1. Instalación
 
-Puede instalar la [libreria](https://www.npmjs.com/package/mdkate) con el comando
+Puede instalar la [libreria](https://www.npmjs.com/package/md-links) con el comando
 
       npm install md-links
 
@@ -89,10 +90,14 @@ Mostrará el texto, la URL, la ruta del archivo dónde el link fue encontrado y 
     "nodemon": "^2.0.15",
     "table": "^6.8.0"
 
-## Autor
+## 5. Backlog
+
+Presentación de [Backlog](https://github.com/mirianalejandra1996/LIM016-md-links/projects/1) que se llevó a cabo con el uso de GitHub Projects.
+
+## 6. Autor
 
 [Mirian Arévalo :sparkles:](https://github.com/mirianalejandra1996)
 
-## Fuente
+## 7. Fuente
 
-[Repositorio de Laboratoria: ](https://github.com/Laboratoria/LIM016-md-links) :Se encuentran todas las condiciones y herramientas a trabajar para el proyecto.
+[Repositorio de Laboratoria: ](https://github.com/Laboratoria/LIM016-md-links) Se encuentran todas las condiciones y herramientas a trabajar para el proyecto.
