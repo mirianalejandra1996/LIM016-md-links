@@ -23,9 +23,9 @@ Esta herramienta permite:
 
 ## 1. Instalación
 
-Puede instalar la [libreria](https://www.npmjs.com/package/md-links) con el comando
+Puede instalar la [libreria](https://www.npmjs.com/package/@mialedev/md-links) con el comando
 
-      npm install md-links
+      npm install @mialedev/md-links
 
 > **Nota:** También puedes instalar la librería con uso del comando `npm i md-links`
 

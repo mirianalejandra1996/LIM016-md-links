@@ -1,6 +1,11 @@
 {
-  "name": "md-links",
+  "name": "@mialedev/md-links",
   "version": "1.0.0",
+  "author": {
+    "name": "Mirian Arévalo",
+    "email": "mirianalejandra1996@gmail.com",
+    "url": "https://github.com/mirianalejandra1996"
+  },
   "description": "Md-links tool checker es una libreria de línea de comando (CLI) que facilita la lectura, análisis y generar reportes estadísticos de los enlaces contenidos en archivos de formato Markdown.",
   "main": "./src/mdlinks.js",
   "directories": {
@@ -19,14 +24,14 @@
     "markdown",
     "links",
     "laboratoria",
-    "2022",
     "programmer",
     "tech",
     "nodejs",
     "CLI",
-    "javascript"
+    "javascript",
+    "filesystem",
+    "path"
   ],
-  "author": "Mirian Arevalo",
   "license": "MIT",
   "bin": {
     "md-links": "./src/cli.js"
