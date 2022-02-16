@@ -51,19 +51,19 @@ Mostrará una tabla de ayuda con comandos válidos con ejemplos para aplicarlos.
 
 <div align=center><img src="https://user-images.githubusercontent.com/91838806/154172006-49406278-af8c-4a5a-a5f6-ebc2df689413.png" width=100% ></div>
 
-### `--validate --stats or -va -s`
+### `--validate --stats o -va -s`
 
 Mostrará estadísticas de los links totales, links únicos, y links rotos de los resultados de la validación.
 
 ![-sAnd-vaOptions](https://user-images.githubusercontent.com/91838806/154172809-1421844c-e6d8-4371-afe3-d775012b0897.png)
 
-### `--stats or -s`
+### `--stats o -s`
 
 Mostrará estadísticas básicas sobre los links únicos como links totales y links únicos.
 
 ![-sOption](https://user-images.githubusercontent.com/91838806/154173055-c8468abb-9a09-47df-8e0d-3ec86cf4cc35.png)
 
-### --validate or -va
+### --validate o -va
 
 Mostrará el texto, la URL, la ruta del archivo dónde el link fue encontrado y una respuesta para validar si el link funciona o no (generará un codigo de status y un mensaje "Ok" o "Fail")
 
