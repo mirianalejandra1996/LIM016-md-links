@@ -73,11 +73,11 @@ Mostrará el texto, la URL, la ruta del archivo dónde el link fue encontrado y 
 
 ### API JavaScript
 
-![API](https://user-images.githubusercontent.com/91838806/154178351-69c7e723-288b-4b4c-ac59-06dbcaddf885.jpg)
+![API](https://user-images.githubusercontent.com/91838806/154188697-03a73fec-9d86-4dbd-b2c5-f39e09bb1d33.jpg)
 
 ### CLI (Command Line Interface)
 
-![CLI](https://user-images.githubusercontent.com/91838806/154180949-d00fcd9f-ca1b-439c-b570-c93dd99aa291.jpg)
+![CLI](https://user-images.githubusercontent.com/91838806/154188695-cdea2d39-396a-4308-b8f6-d39a0d2e83b1.jpg)
 
 ## 4. Dependencias Adoptadas
 
