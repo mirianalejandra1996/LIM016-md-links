@@ -1,15 +1,20 @@
 {
-  "name": "md-links",
+  "name": "@mialedev/md-links",
   "version": "1.0.0",
-  "description": "Markdown es un lenguaje de marcado ligero muy popular entre developers. Es usado en muchísimas plataformas que manejan texto plano (GitHub, foros, blogs, ...), y es muy común encontrar varios archivos en ese formato en cualquier tipo de repositorio",
-  "main": "index.js",
+  "author": {
+    "name": "Mirian Arévalo",
+    "email": "mirianalejandra1996@gmail.com",
+    "url": "https://github.com/mirianalejandra1996"
+  },
+  "description": "Md-links tool checker es una libreria de línea de comando (CLI) que facilita la lectura, análisis y generar reportes estadísticos de los enlaces contenidos en archivos de formato Markdown.",
+  "main": "./src/mdlinks.js",
   "directories": {
     "test": "test"
   },
   "scripts": {
-    "dev": "node index.js",
-    "demonio": "nodemon index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "node ./src/mdlinks.js",
+    "demonio": "nodemon ./src/mdlinks.js",
+    "test": "cross-env NODE_OPTIONS=--experimental-vm-modules jest --coverage"
   },
   "repository": {
     "type": "git",
@@ -19,13 +24,18 @@
     "markdown",
     "links",
     "laboratoria",
-    "2022",
     "programmer",
     "tech",
-    "nodejs"
+    "nodejs",
+    "CLI",
+    "javascript",
+    "filesystem",
+    "path"
   ],
-  "author": "Mirian Arevalo",
   "license": "MIT",
+  "bin": {
+    "md-links": "./src/cli.js"
+  },
   "bugs": {
     "url": "https://github.com/mirianalejandra1996/LIM016-md-links/issues"
   },
@@ -34,11 +44,19 @@
     "@babel/core": "^7.16.12",
     "@babel/node": "^7.16.8",
     "@babel/preset-env": "^7.16.11",
-    "eslint": "^8.7.0"
+    "cross-env": "^7.0.3",
+    "eslint": "^8.8.0",
+    "jest": "^27.5.1"
   },
   "dependencies": {
+    "cfonts": "^2.10.0",
+    "chalk": "^5.0.0",
+    "commander": "^9.0.0",
+    "gradient-string": "^2.0.0",
+    "nanospinner": "^1.0.0",
     "node-fetch": "^3.2.0",
-    "nodemon": "^2.0.15"
+    "nodemon": "^2.0.15",
+    "table": "^6.8.0"
   },
   "type": "module"
 }
