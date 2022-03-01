@@ -69,7 +69,7 @@ describe("convertPathAbsolute function", () => {
 
 describe("readFile function", () => {
   it("should return the content of a file when file has content", () => {
-    const fileContent = `## 2. Resumen del proyecto\r\n\r\n[Node.js](https://nodejs.org/es/) es un entorno de ejecución para JavaScript\r\nconstruido con el [motor de JavaScript V8 de Chrome](https://developers.google.com/v8/).\r\nEsto nos va a permitir ejecutar JavaScript en el entorno del sistema operativo,\r\nya sea tu máquina o un servidor, lo cual nos abre las puertas para poder\r\ninteractuar con el sistema en sí, mainFolder, redes, ...`;
+    const fileContent = `## 2. Resumen del proyecto\r\n\r\n[Node.js](https://nodejs.org/es/) es un entorno de ejecución para JavaScript\r\nconstruido con el [motor de JavaScript V8 de Chrome](https://developers.google.com/v8/).\r\nEsto nos va a permitir ejecutar JavaScript en el entorno del sistema operativo,\r\nya sea tu máquina o un servidor, lo cual nos abre las puertas para poder\r\ninteractuar con el sistema en sí, archivos, redes, ...`;
 
     const path =
       "C:\\Users\\Miria\\Desktop\\MD-LINKS\\LIM016-md-links\\test\\mainFolder\\filemd3.md";
